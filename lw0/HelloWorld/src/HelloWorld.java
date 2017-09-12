@@ -4,7 +4,7 @@ public class HelloWorld {
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("First argument are required!");
-            return;
+            System.exit(-1);
         }
 
         System.out.println("Hello, Java from " + args[0]);

@@ -16,7 +16,7 @@ public class HelloWorld {
         System.out.println("OS name: " + System.getProperty("os.name"));
         System.out.println("OS version: " + System.getProperty("os.version"));
         System.out.println("Java version: " + System.getProperty("java.version"));
-        System.out.println("Java path: " + System.getenv("JAVA_HOME"));
+        System.out.println("JDK path: " + System.getenv("JAVA_HOME"));
         System.out.println("User path: " + System.getProperty("user.dir"));
     }
 }

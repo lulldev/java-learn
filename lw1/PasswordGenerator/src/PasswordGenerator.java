@@ -3,6 +3,7 @@ package net.volgatech.javacore2017;
 public class PasswordGenerator {
     public static int ERR_INVALID_PROGRAM_ARGS    = -1;
     public static int ERR_INVALID_PASSWORD_LENGTH = -2;
+    public static int ERR_INVALID_PASSWORD_TYPE   = -3;
     public static int EXIT_SUCCESS                =  0;
 
     public static String passGenerator(int length, String alphabet) {
@@ -32,7 +33,7 @@ public class PasswordGenerator {
             }
         } catch (NumberFormatException e) {
             System.out.println("Specify integer length");
-            System.exit(ERR_INVALID_PASSWORD_LENGTH);
+            System.exit(ERR_INVALID_PASSWORD_TYPE);
         }
         System.out.println(passGenerator(length, args[1]));
         System.exit(EXIT_SUCCESS);

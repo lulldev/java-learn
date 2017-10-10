@@ -51,28 +51,28 @@ public class CipherOfCaesar {
         for (int i = 0; i < textString.length(); i++) {
             char c = chars[i];
             if (c >= 'a' && c <= 'z') {
-                c = (char) (c + (shift % MAX_EN_ALPHABET_LENGHT));
+                c = (char) (c - (shift % MAX_EN_ALPHABET_LENGHT));
                 if (c < 'a') {
                     c = (char) ('z' - ('a' - c) + 1);
                 }
                 chars[i] = c;
             }
             else if (c >= 'A' && c <= 'Z') {
-                c = (char) (c + (shift % MAX_EN_ALPHABET_LENGHT));
-                if (c < 'А') {
+                c = (char) (c - (shift % MAX_EN_ALPHABET_LENGHT));
+                if (c < 'A') {
                     c = (char) ('Z' - ('A' - c) + 1);
                 }
                 chars[i] = c;
             }
             else if (c >= 'а' && c <= 'я') {
-                c = (char) (c + (shift % MAX_RU_ALPHABET_LENGHT));
+                c = (char) (c - (shift % MAX_RU_ALPHABET_LENGHT));
                 if (c < 'а') {
                     c = (char) ('я' - ('а' - c) + 1);
                 }
                 chars[i] = c;
             }     
             else if (c >= 'А' && c <= 'Я') {
-                c = (char) (c + (shift % MAX_RU_ALPHABET_LENGHT));
+                c = (char) (c - (shift % MAX_RU_ALPHABET_LENGHT));
                 if (c < 'А') {
                     c = (char) ('Я' - ('А' - c) + 1);
                 }

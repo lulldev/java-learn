@@ -1,6 +1,13 @@
 package net.volgatech.javacore2017;
 
 public class CipherOfCaesar {
+    public static int ERR_INVALID_PROGRAM_ARGS  = -1;
+    public static int ERR_ENCRYPTION_KEY_LENGTH = -2;
+    public static int ERR_ENCRYPTION_KEY_TYPE   = -3;
+    public static int ERR_ALPHABET_LENGTH       = -4;  
+    public static int ERR_MODE_VALUE            = -5;  
+    public static int EXIT_SUCCESS              =  0;
+
     public static String caesarEncrypt(String textString, int shift) {
         char[] chars = textString.toCharArray();
         for (int i = 0; i < textString.length(); i++) {
@@ -76,16 +83,27 @@ public class CipherOfCaesar {
         if (args.length != 3) {
             System.out.println("Specify the arguments for the program!");
             System.out.println("CaesarCrypt <mode> <key> <target_string>");
-            System.exit(-1);
+            System.exit(ERR_INVALID_PROGRAM_ARGS);
         }
 
         int key = 0;
 
         try {
             key = Integer.parseInt(args[1]);
+            if (key < 1) {
+                System.out.println("Key of encryption must be > 0");
+                System.exit(ERR_ENCRYPTION_KEY_LENGTH);
+            }
         } catch (NumberFormatException e) {
             System.out.println("Specify integer key for encoding/decoding!");
-            System.exit(-3);
+            System.exit(ERR_ENCRYPTION_KEY_TYPE);
+        }
+
+        String alphabet = args[2];
+
+        if (alphabet.length() == 0) {
+            System.out.println("Specify filled akphabet for encrypt/decrypt!");
+            System.exit(ERR_ALPHABET_LENGTH);
         }
 
         switch (args[0]) {
@@ -97,8 +115,9 @@ public class CipherOfCaesar {
             break;
         default:
             System.out.println("Specify mode argument!");
-            System.exit(-2);
+            System.exit(ERR_MODE_VALUE);
             break;
         }
+        System.exit(EXIT_SUCCESS);
     }
 }

@@ -1,5 +1,7 @@
 package net.volgatech.javacore2017;
 
+import javax.transaction.xa.Xid;
+
 public class CipherOfCaesar 
 {
     public static String CaesarCrypt(String textString, int shift, boolean isDecode)
@@ -18,7 +20,7 @@ public class CipherOfCaesar
                 x = (x + shift) % 96;
                 if (x < 0)
                 {
-                    x += 96; //java modulo can lead to negative values!
+                    x += 96;
                 }
                 chars[i] = (char) (x + 32);
             }

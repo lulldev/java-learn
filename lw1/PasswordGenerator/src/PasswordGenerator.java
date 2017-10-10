@@ -1,41 +1,31 @@
 package net.volgatech.javacore2017;
 
 public class PasswordGenerator {
-    public static String PasswordGenerator(int length, String alphabet) {
+    public static String PassGenerator(int length, String alphabet) {
         char[] alphabetChars = alphabet.toCharArray();
+        char[] resultPassword;
+        resultPassword = new char[length];
         for (int i = 0; i < length; i++) {
-            char c = alphabetChars[i];     
+            resultPassword[i] = alphabetChars[(int)(Math.random() * length)];
         }
         return new String(alphabetChars);
     }
 
     public static void main(String[] args) {
-        if (args.length != 3) {
+        if (args.length != 2) {
             System.out.println("Specify the arguments for the program!");
-            System.out.println("CaesarCrypt <mode> <key> <target_string>");
+            System.out.println("PasswordGenerator <length> <alphabet_string>");
             System.exit(-1);
         }
 
-        int key = 0;
+        int length = 0;
 
         try {
-            key = Integer.parseInt(args[1]);
+            length = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
-            System.out.println("Specify integer key for encoding/decoding!");
+            System.out.println("Specify integer length");
             System.exit(-3);
         }
-
-        switch (args[0]) {
-        case "-e":
-            System.out.println(CaesarEncrypt(args[2], key));
-            break;
-        case "-d":
-            System.out.println(CaesarDecrypt(args[2], key));
-            break;
-        default:
-            System.out.println("Specify mode argument!");
-            System.exit(-2);
-            break;
-        }
+        System.out.println(PassGenerator(length, args[2]));
     }
 }

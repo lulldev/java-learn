@@ -6,9 +6,9 @@ public class PasswordGenerator {
         char[] resultPassword;
         resultPassword = new char[length];
         for (int i = 0; i < length; i++) {
-            resultPassword[i] = alphabetChars[(int)(Math.random() * length)];
+            resultPassword[i] = alphabetChars[(int)(Math.random() * alphabet.length())];
         }
-        return new String(alphabetChars);
+        return new String(resultPassword);
     }
 
     public static void main(String[] args) {
@@ -21,11 +21,12 @@ public class PasswordGenerator {
         int length = 0;
 
         try {
-            length = Integer.parseInt(args[1]);
+            length = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
             System.out.println("Specify integer length");
-            System.exit(-3);
+            System.exit(-2);
         }
-        System.out.println(PassGenerator(length, args[2]));
+        System.out.println(PassGenerator(length, args[1]));
+        System.exit(0);
     }
 }

@@ -22,9 +22,13 @@ public class PasswordGenerator {
 
         try {
             length = Integer.parseInt(args[0]);
+            if (length < 0) {
+                System.out.println("Invalid password length");
+                System.exit(-2);
+            }
         } catch (NumberFormatException e) {
             System.out.println("Specify integer length");
-            System.exit(-2);
+            System.exit(-3);
         }
         System.out.println(PassGenerator(length, args[1]));
         System.exit(0);

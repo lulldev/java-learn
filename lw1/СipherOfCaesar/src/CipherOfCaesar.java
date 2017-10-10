@@ -1,7 +1,7 @@
 package net.volgatech.javacore2017;
 
 public class CipherOfCaesar {
-    public static String CaesarEncrypt(String textString, int shift) {
+    public static String caesarEncrypt(String textString, int shift) {
         char[] chars = textString.toCharArray();
         for (int i = 0; i < textString.length(); i++) {
             char c = chars[i];
@@ -37,7 +37,7 @@ public class CipherOfCaesar {
         return new String(chars);
     }
 
-    public static String CaesarDecrypt(String textString, int shift) {
+    public static String caesarDecrypt(String textString, int shift) {
         char[] chars = textString.toCharArray();
         for (int i = 0; i < textString.length(); i++) {
             char c = chars[i];
@@ -90,10 +90,10 @@ public class CipherOfCaesar {
 
         switch (args[0]) {
         case "-e":
-            System.out.println(CaesarEncrypt(args[2], key));
+            System.out.println(caesarEncrypt(args[2], key));
             break;
         case "-d":
-            System.out.println(CaesarDecrypt(args[2], key));
+            System.out.println(caesarDecrypt(args[2], key));
             break;
         default:
             System.out.println("Specify mode argument!");

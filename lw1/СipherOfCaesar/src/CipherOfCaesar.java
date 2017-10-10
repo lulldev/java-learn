@@ -1,7 +1,5 @@
 package net.volgatech.javacore2017;
 
-import javax.transaction.xa.Xid;
-
 public class CipherOfCaesar {
     public static String CaesarEncrypt(String textString, int shift) {
         char[] chars = textString.toCharArray();
@@ -46,28 +44,28 @@ public class CipherOfCaesar {
             if (c >= 'a' && c <= 'z') {
                 c = (char) (c + (shift % 26));
                 if (c < 'a') {
-                    c = (char) ('z' - ('a' - c) - 1);
+                    c = (char) ('z' - ('a' - c) + 1);
                 }
                 chars[i] = c;
             }
             else if (c >= 'A' && c <= 'Z') {
                 c = (char) (c + (shift % 26));
                 if (c < 'А') {
-                    c = (char) ('Z' - ('A' - c) - 1);
+                    c = (char) ('Z' - ('A' - c) + 1);
                 }
                 chars[i] = c;
             }
             else if (c >= 'а' && c <= 'я') {
                 c = (char) (c + (shift % 32));
                 if (c < 'а') {
-                    c = (char) ('я' - ('а' - c) - 1);
+                    c = (char) ('я' - ('а' - c) + 1);
                 }
                 chars[i] = c;
             }     
             else if (c >= 'А' && c <= 'Я') {
                 c = (char) (c + (shift % 32));
                 if (c < 'А') {
-                    c = (char) ('Я' - ('А' - c) - 1);
+                    c = (char) ('Я' - ('А' - c) + 1);
                 }
                 chars[i] = c;
             }
@@ -95,6 +93,7 @@ public class CipherOfCaesar {
             System.out.println(CaesarEncrypt(args[2], key));
             break;
         case "-d":
+            System.out.println(CaesarDecrypt(args[2], key));
             break;
         default:
             System.out.println("Specify mode argument!");

@@ -1,4 +1,8 @@
 package com.company.Supermarket;
 
-public class CashDesk {
+class CashDesk {
+
+    private PaymentMethod paymentMethod;
+    private Bill bill;
+
 }

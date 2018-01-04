@@ -1,4 +1,4 @@
 package supermarket.Supermarket;
 
-public class PaymentMethod {
+class PaymentMethod {
 }

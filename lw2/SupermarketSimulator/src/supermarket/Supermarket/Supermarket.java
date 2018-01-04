@@ -2,17 +2,20 @@ package supermarket.Supermarket;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ThreadLocalRandom;
 
-import supermarket.Customer.Customer;
 import supermarket.Supermarket.CashDesk;
+import supermarket.Supermarket.SupermarketEvent;
+import supermarket.Customer.Customer;
 
 public class Supermarket {
 
     private static final int workingTimeMinutes = 1;
 
+    private SupermarketEvent marketEvent;
     private boolean isOpen;
     private Customer customerList[];
-    private CashDesk cashDesks[];
+    private CashDesk cashDesk;
 
     public void openMarket() {
         this.isOpen = true;
@@ -49,11 +52,13 @@ public class Supermarket {
     public void runMarketScenario() {
         final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
-            int n = 0;
+            int seconds = 0;
             @Override
             public void run() {
-                System.out.println(n);
-                if (++n == (workingTimeMinutes * 60)) {
+                // TODO: handle in switch case types
+                // TODO: simplify event calls
+                // new SupermarketEvent().getNextRandomEvent()
+                if (++seconds == (workingTimeMinutes * 60)) {
                     timer.cancel();
                 }
             }

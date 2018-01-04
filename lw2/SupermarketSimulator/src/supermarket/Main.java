@@ -1,8 +1,11 @@
 package supermarket;
 
+import supermarket.Supermarket.Supermarket;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Specify mode argument!");
+        Supermarket supermarket = new Supermarket();
+        supermarket.runMarketScenario();
     }
 }

@@ -1,9 +1,14 @@
 package supermarket.Supermarket;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import supermarket.Customer.Customer;
 import supermarket.Supermarket.CashDesk;
 
 public class Supermarket {
+
+    private static final int workingTimeMinutes = 1;
 
     private boolean isOpen;
     private Customer customerList[];
@@ -39,6 +44,20 @@ public class Supermarket {
 
     public void deleteCustomer(Customer customer) {
 
+    }
+
+    public void runMarketScenario() {
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            int n = 0;
+            @Override
+            public void run() {
+                System.out.println(n);
+                if (++n == (workingTimeMinutes * 60)) {
+                    timer.cancel();
+                }
+            }
+        }, 1000, 1000);
     }
 
 }

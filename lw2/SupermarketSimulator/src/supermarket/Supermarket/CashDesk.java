@@ -1,4 +1,4 @@
-package com.company.Supermarket;
+package supermarket.Supermarket;
 
 class CashDesk {
 

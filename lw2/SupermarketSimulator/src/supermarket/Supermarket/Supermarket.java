@@ -1,6 +1,6 @@
-package com.company.Supermarket;
+package supermarket.Supermarket;
 
-import com.company.Customer.Customer;
+import supermarket.Customer.Customer;
 
 public class Supermarket {
 

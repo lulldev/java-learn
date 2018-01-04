@@ -1,8 +1,8 @@
-package com.company;
+package supermarket;
 
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+        System.out.println("Specify mode argument!");
     }
 }

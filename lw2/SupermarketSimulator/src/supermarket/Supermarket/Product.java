@@ -2,8 +2,9 @@ package supermarket.Supermarket;
 
 import java.math.BigDecimal;
 
-class Product {
+public class Product {
 
+    private int productId;
     private Discount discount;
     private BigDecimal price;
 

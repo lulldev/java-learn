@@ -1,8 +1,8 @@
 package supermarket.Supermarket;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ThreadLocalRandom;
 import java.math.BigDecimal;
 
 import supermarket.Supermarket.CashDesk;
@@ -15,7 +15,7 @@ public class Supermarket {
 
     private SupermarketEvent marketEvent;
     private boolean isOpen;
-    private Customer customerList[];
+    private List<Customer> customers;
     private CashDesk cashDesk;
 
     public void Supermarket() {

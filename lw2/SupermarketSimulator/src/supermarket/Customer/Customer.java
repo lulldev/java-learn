@@ -30,12 +30,16 @@ public class Customer {
         return this.bonuses;
     }
 
-    public void cameInProductInBasket(Product product) {
+    public final void cameInProductInBasket(Product product) {
          this.basket.addProduct(product);
     }
 
-    public void cameOutProductInBasket(int productId) {
+    public final void cameOutProductInBasket(int productId) {
         this.basket.deleteProduct(productId);
+    }
+
+    public final String getBasketContent() {
+        return this.basket.toString();
     }
 
 }

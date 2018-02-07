@@ -1,6 +1,7 @@
 package supermarket.Supermarket;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,9 +17,9 @@ public class Supermarket {
 
     private static final int workingTimeMinutes = 1;
 
-    private SupermarketEvent marketEvent = new SupermarketEvent();;
+    private final SupermarketEvent marketEvent = new SupermarketEvent();;
     private boolean isOpen;
-    private List<Customer> customers;
+    private final List<Customer> customers = new ArrayList<>();
     private CashDesk cashDesk;
 
     // todo add logger
@@ -89,7 +90,12 @@ public class Supermarket {
         int cash = Random.getRandomInt(0, 100);
         int bonuses = Random.getRandomInt(0, 10);
         Customer customer = new Customer(customerType, new BigDecimal(cash), new BigDecimal(bonuses));
-//        customers.add(customer);
-        System.out.println(Datetime.getCurrentDatetime());
+
+        int newCustomerId = (customers.size() > 0) ?
+                customers.get(customers.size() - 1).getId() + 1 : 1;
+        customer.setId(newCustomerId);
+        customers.add(customer);
+
+        System.out.println("[" + Datetime.getCurrentDatetime() + "]" + " - new customer #" + customer.getId() + " arrived!");
     }
 }

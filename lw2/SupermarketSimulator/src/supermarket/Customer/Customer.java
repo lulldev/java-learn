@@ -8,10 +8,11 @@ import java.math.BigDecimal;
 
 public class Customer {
 
-    private final Basket basket = new Basket();
+    private int id;
     private CustomerType customerType;
     private BigDecimal cash;
     private BigDecimal bonuses;
+    private final Basket basket = new Basket();
 
     /**
      * @param customerType
@@ -19,6 +20,7 @@ public class Customer {
      * @param bonuses
      */
     public Customer(CustomerType customerType, BigDecimal cash, BigDecimal bonuses) {
+        this.id = -1; // nobody
         this.customerType = customerType;
         this.cash = cash;
         this.bonuses = bonuses;
@@ -46,6 +48,14 @@ public class Customer {
 
     public final String getBasketContent() {
         return this.basket.toString();
+    }
+
+    public final void setId(int customerId) {
+        this.id = customerId;
+    }
+
+    public final int getId() {
+        return this.id;
     }
 
 }

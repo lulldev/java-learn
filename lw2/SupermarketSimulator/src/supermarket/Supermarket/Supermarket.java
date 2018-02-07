@@ -1,5 +1,6 @@
 package supermarket.Supermarket;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -7,7 +8,7 @@ import java.math.BigDecimal;
 
 import supermarket.Supermarket.CashDesk;
 import supermarket.Supermarket.SupermarketEvent;
-import supermarket.Customer.Customer;
+import supermarket.Customer.*;
 
 public class Supermarket {
 
@@ -64,9 +65,7 @@ public class Supermarket {
         // TODO: init once and calls many this.marketEvent
         switch (marketEvent.getNextRandomEvent()) {
             case SupermarketEvent.EVENT_CUSTOMER_CAME_IN:
-                Customer customer = new Customer("typesdsdsd", new BigDecimal(100), new BigDecimal(100));
-                System.out.println("new customer");
-                System.out.println(customer.getCash());
+                addRandomCustomer();
                 break;
             case SupermarketEvent.EVENT_CUSTOMER_CAME_OUT:
                 break;
@@ -79,5 +78,14 @@ public class Supermarket {
             case SupermarketEvent.EVENT_CASHDESK_WRONG_PAY:
                 break;
         }
+    }
+
+    private void addRandomCustomer() {
+        CustomerType customerType = CustomerType.getByCode((int) (Math.random() * (CustomerType.values().length - 0)) + 0);
+        int cash = (int) (Math.random() * (100 - 1)) + 1;
+        int bonuses = (int) (Math.random() * (10 - 0)) + 0;
+        Customer customer = new Customer(customerType, new BigDecimal(cash), new BigDecimal(bonuses));
+        System.out.println("new customer");
+        System.out.println(customer.getCash());
     }
 }

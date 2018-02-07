@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.math.BigDecimal;
+import utils.Random;
+import utils.Datetime;
 
 import supermarket.Supermarket.CashDesk;
 import supermarket.Supermarket.SupermarketEvent;
@@ -18,6 +20,8 @@ public class Supermarket {
     private boolean isOpen;
     private List<Customer> customers;
     private CashDesk cashDesk;
+
+    // todo add logger
 
     public void openMarket() {
         this.isOpen = true;
@@ -81,11 +85,11 @@ public class Supermarket {
     }
 
     private void addRandomCustomer() {
-        CustomerType customerType = CustomerType.getByCode((int) (Math.random() * (CustomerType.values().length - 0)) + 0);
-        int cash = (int) (Math.random() * (100 - 1)) + 1;
-        int bonuses = (int) (Math.random() * (10 - 0)) + 0;
+        CustomerType customerType = CustomerType.getByCode((Random.getRandomInt(0, CustomerType.values().length)));
+        int cash = Random.getRandomInt(0, 100);
+        int bonuses = Random.getRandomInt(0, 10);
         Customer customer = new Customer(customerType, new BigDecimal(cash), new BigDecimal(bonuses));
-        System.out.println("new customer");
-        System.out.println(customer.getCash());
+//        customers.add(customer);
+        System.out.println(Datetime.getCurrentDatetime());
     }
 }

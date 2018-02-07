@@ -73,6 +73,7 @@ public class Supermarket {
                 addRandomCustomer();
                 break;
             case SupermarketEvent.EVENT_CUSTOMER_CAME_OUT:
+                removeRandomCustomer();
                 break;
             case SupermarketEvent.EVENT_CUSTOMER_PUT_IN_BUSKET:
                 break;
@@ -97,5 +98,14 @@ public class Supermarket {
         customers.add(customer);
 
         System.out.println("[" + Datetime.getCurrentDatetime() + "]" + " - new customer #" + customer.getId() + " arrived!");
+    }
+
+    private void removeRandomCustomer() {
+        if (customers.size() > 0) {
+            int rndCustomerIndex = Random.getRandomInt(0, customers.size());
+            Customer rndCustomer = customers.get(rndCustomerIndex);
+            customers.remove(rndCustomerIndex);
+            System.out.println("[" + Datetime.getCurrentDatetime() + "]" + " - customer #" + rndCustomer.getId() + " came out!");
+        }
     }
 }

@@ -13,14 +13,10 @@ public class Supermarket {
 
     private static final int workingTimeMinutes = 1;
 
-    private SupermarketEvent marketEvent;
+    private SupermarketEvent marketEvent = new SupermarketEvent();;
     private boolean isOpen;
     private List<Customer> customers;
     private CashDesk cashDesk;
-
-    public void Supermarket() {
-        this.marketEvent = new SupermarketEvent();
-    }
 
     public void openMarket() {
         this.isOpen = true;
@@ -28,6 +24,10 @@ public class Supermarket {
 
     public void closeMarket() {
         this.isOpen = false;
+    }
+
+    public int getWorkingTimeMinutes() {
+        return workingTimeMinutes;
     }
 
     public void finishWork() {
@@ -55,34 +55,29 @@ public class Supermarket {
     }
 
     public void runMarketScenario() {
-        final Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            int seconds = 0;
-            @Override
-            public void run() {
-                // TODO: init once and calls many this.marketEvent
-                switch (new SupermarketEvent().getNextRandomEvent()) {
-                    case SupermarketEvent.EVENT_CUSTOMER_CAME_IN:
-                        Customer customer = new Customer("typesdsdsd", new BigDecimal(100), new BigDecimal(100));
-                        System.out.println("new customer");
-                        System.out.println(customer.getCash());
-                        break;
-                    case SupermarketEvent.EVENT_CUSTOMER_CAME_OUT:
-                        break;
-                    case SupermarketEvent.EVENT_CUSTOMER_PUT_IN_BUSKET:
-                        break;
-                    case SupermarketEvent.EVENT_CUSTOMER_LAID_BUSKET:
-                        break;
-                    case SupermarketEvent.EVENT_CASHDESK_VALID_PAY:
-                        break;
-                    case SupermarketEvent.EVENT_CASHDESK_WRONG_PAY:
-                        break;
-                }
-                if (++seconds == (workingTimeMinutes * 60)) {
-                    timer.cancel();
-                }
-            }
-        }, 1000, 1000);
-    }
 
+        // todo add products in market
+        // todo add open market
+        // todo - close market add to rnd event
+        // todo - after close show report
+
+        // TODO: init once and calls many this.marketEvent
+        switch (marketEvent.getNextRandomEvent()) {
+            case SupermarketEvent.EVENT_CUSTOMER_CAME_IN:
+                Customer customer = new Customer("typesdsdsd", new BigDecimal(100), new BigDecimal(100));
+                System.out.println("new customer");
+                System.out.println(customer.getCash());
+                break;
+            case SupermarketEvent.EVENT_CUSTOMER_CAME_OUT:
+                break;
+            case SupermarketEvent.EVENT_CUSTOMER_PUT_IN_BUSKET:
+                break;
+            case SupermarketEvent.EVENT_CUSTOMER_LAID_BUSKET:
+                break;
+            case SupermarketEvent.EVENT_CASHDESK_VALID_PAY:
+                break;
+            case SupermarketEvent.EVENT_CASHDESK_WRONG_PAY:
+                break;
+        }
+    }
 }

@@ -48,18 +48,6 @@ public class Supermarket {
         }
     }
 
-    public void addCustomer(Customer customer) {
-        if (this.isOpen) {
-            // TODO: add customer
-        } else {
-            // TODO: show hint
-        }
-    }
-
-    public void deleteCustomer(Customer customer) {
-
-    }
-
     public void runMarketScenario() {
 
         // todo add products in market
@@ -96,8 +84,7 @@ public class Supermarket {
                 customers.get(customers.size() - 1).getId() + 1 : 1;
         customer.setId(newCustomerId);
         customers.add(customer);
-
-        System.out.println("[" + Datetime.getCurrentDatetime() + "]" + " - new customer #" + customer.getId() + " arrived!");
+        logger("new customer #" + customer.getId() + " arrived!");
     }
 
     private void removeRandomCustomer() {
@@ -105,7 +92,11 @@ public class Supermarket {
             int rndCustomerIndex = Random.getRandomInt(0, customers.size());
             Customer rndCustomer = customers.get(rndCustomerIndex);
             customers.remove(rndCustomerIndex);
-            System.out.println("[" + Datetime.getCurrentDatetime() + "]" + " - customer #" + rndCustomer.getId() + " came out!");
+            logger("customer #" + rndCustomer.getId() + " came out!");
         }
+    }
+
+    private void logger(String action) {
+        System.out.println("[" + Datetime.getCurrentDatetime() + "]" + " - " + action);
     }
 }

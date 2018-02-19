@@ -1,4 +1,6 @@
-package supermarket.Supermarket;
+package supermarket.Product;
+
+import supermarket.Supermarket.Discount;
 
 import java.math.BigDecimal;
 
@@ -9,20 +11,27 @@ public class Product {
     private Discount discount;
     private BigDecimal price;
     private boolean isOnlyForAdult;
+    private ProductMeasure productMeasure;
 
-    public Product(int productId, String productName, Discount discount, BigDecimal price, boolean isOnlyForAdult) {
+    public Product(int productId, String productName, Discount discount, BigDecimal price, boolean isOnlyForAdult, ProductMeasure measure) {
         this.productId = productId;
         this.productName = productName;
         this.discount = discount;
         this.price = price;
         this.isOnlyForAdult = isOnlyForAdult;
+        this.productMeasure = measure;
     }
 
-    public final String getProductName() {
+    public final int GetProductId() {
+        return this.productId;
+    }
+
+    public final String GetProductName() {
         return this.productName;
     }
 
-    public final BigDecimal getProductPrice() {
+    public final BigDecimal GetProductPrice() {
+
         return this.price;
     }
 

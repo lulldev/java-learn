@@ -1,17 +1,14 @@
 package supermarket.Supermarket;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.math.BigDecimal;
+import java.util.Map;
 import utils.Random;
 import utils.Datetime;
 
-import supermarket.Supermarket.CashDesk;
-import supermarket.Supermarket.SupermarketEvent;
 import supermarket.Customer.*;
+import supermarket.Product.*;
 
 public class Supermarket {
 
@@ -20,6 +17,7 @@ public class Supermarket {
     private final SupermarketEvent marketEvent = new SupermarketEvent();;
     private boolean isOpen;
     private final List<Customer> customers = new ArrayList<>();
+    private final ProductStock productStock = new ProductStock();
     private CashDesk cashDesk;
 
     // todo add logger
@@ -36,22 +34,15 @@ public class Supermarket {
         return workingTimeMinutes;
     }
 
-    public void finishWork() {
-        // TODO: show report
-    }
-
-    public void configureMarket() {
-        if (!this.isOpen) {
-            // TODO: add products & prices
-        } else {
-            // TODO: log err
-        }
-    }
-
     public void runMarketScenario() {
 
+        if (!this.isOpen) {
+            openMarket();
+            logger("market is opened!");
+            configureMarket();
+        }
+
         // todo add products in market
-        // todo add open market
         // todo - close market add to rnd event
         // todo - after close show report
 
@@ -72,6 +63,14 @@ public class Supermarket {
             case SupermarketEvent.EVENT_CASHDESK_WRONG_PAY:
                 break;
         }
+    }
+
+    private void finishWork() {
+        // TODO: show report
+    }
+
+    private void configureMarket() {
+        productStock.GenerateRandomProductStore();
     }
 
     private void addRandomCustomer() {
@@ -95,6 +94,20 @@ public class Supermarket {
             logger("customer #" + rndCustomer.getId() + " came out!");
         }
     }
+
+//    private void addRandomProduct(productList) {
+//        int prict = Random.getRandomInt(1, 100);
+//        int disount = Random.getRandomInt(5, 15);
+//        boolean isOnlyForAdult = (Random.getRandomInt(0, 10) >= 7);
+//
+//        Customer customer = new Customer(customerType, new BigDecimal(cash), new BigDecimal(bonuses));
+//
+//        int newCustomerId = (customers.size() > 0) ?
+//                customers.get(customers.size() - 1).getId() + 1 : 1;
+//        customer.setId(newCustomerId);
+//        customers.add(customer);
+//        logger("new customer #" + customer.getId() + " arrived!");
+//    }
 
     private void logger(String action) {
         System.out.println("[" + Datetime.getCurrentDatetime() + "]" + " - " + action);

@@ -1,8 +1,7 @@
 package supermarket.Customer;
 
 import supermarket.Supermarket.Basket;
-import supermarket.Supermarket.Product;
-import supermarket.Customer.CustomerType;
+import supermarket.Product.Product;
 
 import java.math.BigDecimal;
 
@@ -39,11 +38,11 @@ public class Customer {
     }
 
     public final void cameInProductInBasket(Product product) {
-        this.basket.addProduct(product);
+        this.basket.AddProduct(product);
     }
 
     public final void cameOutProductInBasket(int productId) {
-        this.basket.deleteProduct(productId);
+        this.basket.DeleteProduct(productId);
     }
 
     public final String getBasketContent() {

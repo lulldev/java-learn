@@ -23,7 +23,13 @@ public class ProductStock {
         for(int i = 0; i < productsCount; i++) {
             randomProductId = Random.getRandomInt(1, productList.size());
             randomCount = Random.getRandomInt(2, 20);
-            productStore.put(this.productList.get(randomProductId).GetProductId(), randomCount);
+            Product newProduct = this.productList.get(randomProductId);
+            productStore.put(newProduct.GetProductId(), randomCount);
+
+            System.out.println(" Add product # " + newProduct.GetProductId());
+            System.out.println(" Details: " + newProduct.GetProductName() + ", price: " + newProduct.GetProductPrice());
+            System.out.println(" Total count: " + randomCount);
+            System.out.println(" ---------------");
         }
     }
 

@@ -70,6 +70,7 @@ public class Supermarket {
     }
 
     private void configureMarket() {
+        logger("Add products to Supermarket stock");
         productStock.GenerateRandomProductStore();
     }
 

@@ -4,6 +4,7 @@ import supermarket.Supermarket.Basket;
 import supermarket.Product.Product;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Customer {
 
@@ -37,17 +38,21 @@ public class Customer {
         return this.bonuses;
     }
 
-    public final void cameInProductInBasket(Product product) {
-        this.basket.AddProduct(product);
+    public final void putProductInBasket(int productId) {
+        this.basket.AddProduct(productId);
     }
 
     public final void cameOutProductInBasket(int productId) {
         this.basket.DeleteProduct(productId);
     }
 
-    public final String getBasketContent() {
-        return this.basket.toString();
+    public final Basket getBasket() {
+        return this.basket;
     }
+
+    // todo: maybe
+//    public final String getBasketContent() {
+//    }
 
     public final void setId(int customerId) {
         this.id = customerId;

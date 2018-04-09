@@ -1,40 +1,35 @@
 package supermarket.Supermarket;
-
-import org.jetbrains.annotations.Contract;
-import supermarket.Product.Product;
-
-import java.math.BigDecimal;
-import java.util.HashMap;
+//import supermarket.Product.Product;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Basket {
 
-    private List<Product> products;
+    List<Integer> products = new ArrayList<>();
 
-    public final boolean AddProduct(Product product) {
-        this.products.add(product);
-        return true;
+    public final void AddProduct(int productId) {
+        this.products.add(productId);
     }
 
-    @Contract(pure = true)
-    public final boolean DeleteProduct(int productId) {
-        return true;
+    public final void DeleteProduct(int productId) {
+        this.products.remove((Integer) productId);
     }
 
-    private final Map<String, BigDecimal> getProductsMap() {
-        Map< String, BigDecimal > productsMap = new HashMap<String, BigDecimal>();
-        for (Product product : this.products) {
-            // TODO autoincrement
-            productsMap.put(product.GetProductName(), product.GetProductPrice());
-        }
-        return productsMap;
+    public final int BasketSize() {
+        return this.products.size();
     }
 
+    public final int[] ToIntArray() {
+        int[] ret = new int[this.products.size()];
+        int i = 0;
+        for (Integer e : this.products) ret[i++] = e.intValue();
+        return ret;
+    }
+
+    /*
     @Override
     public final String toString() {
         String productsInfo = "";
-        // TODO each products map
         return productsInfo;
-    }
+    }*/
 }

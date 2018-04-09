@@ -12,7 +12,6 @@ public class Main {
         final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             int seconds = 0;
-
             @Override
             public void run() {
                 supermarket.runMarketScenario();
@@ -22,5 +21,7 @@ public class Main {
             }
         }, 1000, 1000);
 
+        supermarket.closeMarket();
+        // todo: logger(supermarket.showReport());
     }
 }

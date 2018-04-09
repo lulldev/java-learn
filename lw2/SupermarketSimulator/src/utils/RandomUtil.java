@@ -1,6 +1,9 @@
 package utils;
 
-public class Random {
+import java.util.Random;
+
+
+public class RandomUtil {
     /**
      * @param lowerBound
      * @param upperBound
@@ -8,5 +11,10 @@ public class Random {
      */
     public static int getRandomInt(int lowerBound, int upperBound) {
         return (int) (Math.random() * (upperBound - lowerBound)) + lowerBound;
+    }
+
+    public static int getRandomFromArray(int[] array) {
+        int rnd = new Random().nextInt(array.length);
+        return array[rnd];
     }
 }

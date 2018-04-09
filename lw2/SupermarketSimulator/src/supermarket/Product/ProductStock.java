@@ -2,13 +2,12 @@ package supermarket.Product;
 
 import java.math.BigDecimal;
 import java.util.*;
-import utils.Random;
+import utils.RandomUtil;
 
 import supermarket.Supermarket.Discount;
 
 public class ProductStock {
 
-    // productId as count
     private final Map<Integer, Integer> productStore = new HashMap<>();
     private final List<Product> productList = new ArrayList<>();
 
@@ -16,14 +15,12 @@ public class ProductStock {
 
         FillProductList();
 
-        int productsCount = Random.getRandomInt(5, 10);
+        int productsCount = productList.size();
         int randomCount;
-        int randomProductId;
 
         for(int i = 0; i < productsCount; i++) {
-            randomProductId = Random.getRandomInt(1, productList.size());
-            randomCount = Random.getRandomInt(2, 20);
-            Product newProduct = this.productList.get(randomProductId);
+            Product newProduct = this.productList.get(i);
+            randomCount = RandomUtil.getRandomInt(2, 20);
             productStore.put(newProduct.GetProductId(), randomCount);
 
             System.out.println(" Add product # " + newProduct.GetProductId());
@@ -33,8 +30,33 @@ public class ProductStock {
         }
     }
 
+    public final List<Product> GetProductList() {
+        return productList;
+    }
+
+    public final void returnProduct(int productId) {
+        if (this.productStore.containsKey(productId)) {
+            this.productStore.put(productId, this.productStore.get(productId) + 1);
+        }
+    }
+
+    public final boolean deductProduct(int productId) {
+        if (this.productStore.containsKey(productId)) {
+            int count = this.productStore.get(productId);
+            if (count > 0) {
+                this.productStore.put(productId, this.productStore.get(productId) - 1);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public final Product GetProductById(int productId) {
+        return productList.get(productId);
+    }
+
     private void FillProductList() {
-        // todo:
+        // todo: где делать скидки при генерации?
         Discount discount = new Discount();
 
         productList.add(new Product(1, "Bread", discount, new BigDecimal(10), false, ProductMeasure.PIECES));

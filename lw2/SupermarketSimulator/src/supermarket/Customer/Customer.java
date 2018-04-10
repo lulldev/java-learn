@@ -38,12 +38,12 @@ public class Customer {
         return this.bonuses;
     }
 
-    public final void putProductInBasket(int productId) {
-        this.basket.AddProduct(productId);
+    public final void putProductInBasket(int productId, int count) {
+        this.basket.AddProduct(productId, count);
     }
 
-    public final void cameOutProductInBasket(int productId) {
-        this.basket.DeleteProduct(productId);
+    public final void cameOutProductInBasket(int productId, int count) {
+        this.basket.DeleteProduct(productId, count);
     }
 
     public final Basket getBasket() {

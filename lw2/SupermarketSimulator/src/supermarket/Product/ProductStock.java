@@ -34,17 +34,17 @@ public class ProductStock {
         return productList;
     }
 
-    public final void returnProduct(int productId) {
+    public final void returnProduct(int productId, int count) {
         if (this.productStore.containsKey(productId)) {
-            this.productStore.put(productId, this.productStore.get(productId) + 1);
+            this.productStore.put(productId, this.productStore.get(productId) + count);
         }
     }
 
-    public final boolean deductProduct(int productId) {
+    public final boolean deductProduct(int productId, int count) {
         if (this.productStore.containsKey(productId)) {
-            int count = this.productStore.get(productId);
-            if (count > 0) {
-                this.productStore.put(productId, this.productStore.get(productId) - 1);
+            int storeCount = this.productStore.get(productId);
+            if (storeCount > 0 && storeCount >= count) {
+                this.productStore.put(productId, this.productStore.get(productId) - count);
                 return true;
             }
         }

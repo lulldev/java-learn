@@ -31,8 +31,11 @@ public class Product {
     }
 
     public final BigDecimal GetProductPrice() {
-
         return this.price;
+    }
+
+    public final ProductMeasure GetProductMeasure() {
+        return this.productMeasure;
     }
 
     @Override

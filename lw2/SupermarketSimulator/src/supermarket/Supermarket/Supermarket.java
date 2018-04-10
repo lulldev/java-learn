@@ -97,12 +97,13 @@ public class Supermarket {
 
             List<Product> productList = productStock.GetProductList();
             int rndProductIndex = RandomUtil.getRandomInt(0, productList.size());
-            // todo: возможно сделать вычет по количеству или measure
-            if (productStock.deductProduct(rndProductIndex)) {
-                rndCustomer.putProductInBasket(rndProductIndex);
+            int rndProductCount = RandomUtil.getRandomInt(1, 5);
+
+            if (productStock.deductProduct(rndProductIndex, rndProductCount)) {
+                rndCustomer.putProductInBasket(rndProductIndex, rndProductCount);
                 Product product = productStock.GetProductById(rndProductIndex);
                 logger("customer #" + rndCustomer.getId() + " put in basket: \n"
-                        + product.toString());
+                        + product.toString() + " (" + rndProductCount + " " + product.GetProductMeasure() + ")");
             }
         }
     }
@@ -116,11 +117,12 @@ public class Supermarket {
 
             if (basketSize > 0) {
                 int rndProductIndex = RandomUtil.getRandomFromArray(customerBasket.ToIntArray());
-                rndCustomer.cameOutProductInBasket(rndProductIndex);
-                productStock.returnProduct(rndProductIndex);
+                int rndProductCount = RandomUtil.getRandomInt(1, 3);
+                rndCustomer.cameOutProductInBasket(rndProductIndex, rndProductCount);
+                productStock.returnProduct(rndProductIndex, rndProductCount);
                 Product product = productStock.GetProductById(rndProductIndex);
                 logger("customer #" + rndCustomer.getId() + " came out from basket: \n"
-                        + product.toString());
+                        + product.toString() + " (" + rndProductCount + " " + product.GetProductMeasure() + ")");
             }
         }
     }

@@ -1,18 +1,26 @@
 package supermarket.Supermarket;
 //import supermarket.Product.Product;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Basket {
 
-    List<Integer> products = new ArrayList<>();
+//    List<Integer> products = new ArrayList<>();
+    private final Map<Integer, Integer> products = new HashMap<>();
 
-    public final void AddProduct(int productId) {
-        this.products.add(productId);
+
+    public final void AddProduct(int productId, int count) {
+        this.products.put(productId, count);
     }
 
-    public final void DeleteProduct(int productId) {
-        this.products.remove((Integer) productId);
+    public final void DeleteProduct(int productId, int count) {
+        //this.products.remove((Integer) productId);
+        int storeCount = this.products.get(productId);
+        if (storeCount >= count) {
+            this.products.put(productId, this.products.get(productId) - count);
+        }
     }
 
     public final int BasketSize() {
@@ -22,7 +30,9 @@ public class Basket {
     public final int[] ToIntArray() {
         int[] ret = new int[this.products.size()];
         int i = 0;
-        for (Integer e : this.products) ret[i++] = e.intValue();
+        for (Integer key : this.products.keySet()) {
+            ret[i++] = key;
+        }
         return ret;
     }
 

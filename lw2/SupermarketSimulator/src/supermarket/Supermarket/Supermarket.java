@@ -3,9 +3,7 @@ package supermarket.Supermarket;
 import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
-import java.util.Map;
 
-import com.sun.tools.javac.util.ArrayUtils;
 import utils.RandomUtil;
 import utils.Datetime;
 
@@ -13,16 +11,6 @@ import supermarket.Customer.*;
 import supermarket.Product.*;
 
 public class Supermarket {
-
-    private static final int workingTimeMinutes = 1;
-
-    private final SupermarketEvent marketEvent = new SupermarketEvent();;
-    private boolean isOpen;
-    private final List<Customer> customers = new ArrayList<>();
-    private final ProductStock productStock = new ProductStock();
-    private CashDesk cashDesk;
-
-    // todo add logger
 
     public void openMarket() {
         this.isOpen = true;
@@ -34,6 +22,14 @@ public class Supermarket {
         return workingTimeMinutes;
     }
 
+    private static final int workingTimeMinutes = 1;
+
+    private final SupermarketEvent marketEvent = new SupermarketEvent();;
+    private boolean isOpen;
+    private final List<Customer> customers = new ArrayList<>();
+    private final ProductStock productStock = new ProductStock();
+    private CashDesk cashDesk = new CashDesk();
+
     public void runMarketScenario() {
 
         if (!this.isOpen) {
@@ -42,7 +38,6 @@ public class Supermarket {
             configureMarket();
         }
 
-        // TODO: init once and calls many this.marketEvent
         switch (marketEvent.getNextRandomEvent()) {
             case SupermarketEvent.EVENT_CUSTOMER_CAME_IN:
                 addRandomCustomer();
@@ -56,9 +51,11 @@ public class Supermarket {
             case SupermarketEvent.EVENT_CUSTOMER_LAID_BUSKET:
                 cameOutRandomCustomerProduct();
                 break;
-            case SupermarketEvent.EVENT_CASHDESK_VALID_PAY:
+            case SupermarketEvent.EVENT_CUSTOMER_JOIN_QUEE:
+                randomCustomerJoinQuee();
                 break;
-            case SupermarketEvent.EVENT_CASHDESK_WRONG_PAY:
+            case SupermarketEvent.EVENT_CUSTOMER_LEFT_QUEE:
+                randomCustomerLeftQuee();
                 break;
         }
     }
@@ -72,13 +69,15 @@ public class Supermarket {
         CustomerType customerType = CustomerType.getByCode((RandomUtil.getRandomInt(0, CustomerType.values().length)));
         int cash = RandomUtil.getRandomInt(0, 100);
         int bonuses = RandomUtil.getRandomInt(0, 10);
-        Customer customer = new Customer(customerType, new BigDecimal(cash), new BigDecimal(bonuses));
 
-        int newCustomerId = (customers.size() > 0) ?
-                customers.get(customers.size() - 1).getId() + 1 : 1;
-        customer.setId(newCustomerId);
+        Customer customer = new Customer(
+                customerType,
+                new BigDecimal(cash),
+                new BigDecimal(bonuses)
+        );
+
         customers.add(customer);
-        logger("new customer #" + customer.getId() + " arrived!");
+        logger("new customer (id: " + customer.getId() + ") arrived!");
     }
 
     private void removeRandomCustomer() {
@@ -86,7 +85,7 @@ public class Supermarket {
             int rndCustomerIndex = RandomUtil.getRandomInt(0, customers.size());
             Customer rndCustomer = customers.get(rndCustomerIndex);
             customers.remove(rndCustomerIndex);
-            logger("customer #" + rndCustomer.getId() + " came out!");
+            logger("customer (id: " + rndCustomer.getId() + ") came out!");
         }
     }
 
@@ -102,7 +101,7 @@ public class Supermarket {
             if (productStock.deductProduct(rndProductIndex, rndProductCount)) {
                 rndCustomer.putProductInBasket(rndProductIndex, rndProductCount);
                 Product product = productStock.GetProductById(rndProductIndex);
-                logger("customer #" + rndCustomer.getId() + " put in basket: \n"
+                logger("customer (id: " + rndCustomer.getId() + ") put in basket: \n"
                         + product.toString() + " (" + rndProductCount + " " + product.GetProductMeasure() + ")");
             }
         }
@@ -121,11 +120,41 @@ public class Supermarket {
                 rndCustomer.cameOutProductInBasket(rndProductIndex, rndProductCount);
                 productStock.returnProduct(rndProductIndex, rndProductCount);
                 Product product = productStock.GetProductById(rndProductIndex);
-                logger("customer #" + rndCustomer.getId() + " came out from basket: \n"
+                logger("customer (id: " + rndCustomer.getId() + ") came out from basket: \n"
                         + product.toString() + " (" + rndProductCount + " " + product.GetProductMeasure() + ")");
             }
         }
     }
+
+    private void randomCustomerJoinQuee() {
+        if (customers.size() > 0) {
+            int rndCustomerIndex = RandomUtil.getRandomInt(0, customers.size());
+            Customer rndCustomer = customers.get(rndCustomerIndex);
+            if (rndCustomer.issetProductsInBasket()) {
+                cashDesk.addCustomerToQuee(rndCustomer.getId());
+                logger("customer (id: " + rndCustomer.getId() + ") join to query");
+            }
+        }
+    }
+
+    private void randomCustomerLeftQuee() {
+        if (customers.size() > 0) {
+            int rndCustomerIndex = RandomUtil.getRandomInt(0, customers.size());
+            Customer rndCustomer = customers.get(rndCustomerIndex);
+            cashDesk.removeCustomerFromQuee(rndCustomer.getId());
+            logger("customer (id: " + rndCustomer.getId() + ") left to cash desk quee");
+        }
+    }
+
+    /*
+     private serveNextCustomerFromQuee() {
+        // get first client from quee
+        // check basket count & total basket price and client bonuses + cash
+        // check client type and product type - if caution - remove product from basket & return to market
+        // payment if check good - add bonuses if product have it, add to stat
+        // clear basket
+     }
+    */
 
     // todo: logger to singleton
     private void logger(String action) {

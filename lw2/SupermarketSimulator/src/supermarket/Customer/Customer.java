@@ -20,10 +20,14 @@ public class Customer {
      * @param bonuses
      */
     public Customer(CustomerType customerType, BigDecimal cash, BigDecimal bonuses) {
-        this.id = -1; // nobody
+        this.id = (int) System.currentTimeMillis();
         this.customerType = customerType;
         this.cash = cash;
         this.bonuses = bonuses;
+    }
+
+    public final int getId() {
+        return this.id;
     }
 
     public CustomerType getCustomerType() {
@@ -38,6 +42,8 @@ public class Customer {
         return this.bonuses;
     }
 
+    public Basket getBasket() { return this.basket; }
+
     public final void putProductInBasket(int productId, int count) {
         this.basket.AddProduct(productId, count);
     }
@@ -46,20 +52,9 @@ public class Customer {
         this.basket.DeleteProduct(productId, count);
     }
 
-    public final Basket getBasket() {
-        return this.basket;
+    public final boolean issetProductsInBasket() {
+        return this.basket.BasketSize() > 0;
     }
 
-    // todo: maybe
-//    public final String getBasketContent() {
-//    }
-
-    public final void setId(int customerId) {
-        this.id = customerId;
-    }
-
-    public final int getId() {
-        return this.id;
-    }
 
 }

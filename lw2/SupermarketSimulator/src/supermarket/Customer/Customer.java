@@ -56,5 +56,8 @@ public class Customer {
         return this.basket.BasketSize() > 0;
     }
 
+    public final boolean IsAdult() {
+        return this.customerType == CustomerType.Adult || this.customerType == CustomerType.Retired;
+    }
 
 }

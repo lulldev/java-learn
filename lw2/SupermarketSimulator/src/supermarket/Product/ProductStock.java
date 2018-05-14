@@ -18,7 +18,7 @@ public class ProductStock {
         int productsCount = productList.size();
         int randomCount;
 
-        for(int i = 0; i < productsCount; i++) {
+        for (int i = 0; i < productsCount; i++) {
             Product newProduct = this.productList.get(i);
             randomCount = RandomUtil.getRandomInt(2, 20);
             productStore.put(newProduct.GetProductId(), randomCount);

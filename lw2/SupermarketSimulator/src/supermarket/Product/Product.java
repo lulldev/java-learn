@@ -34,9 +34,9 @@ public class Product {
         return this.price;
     }
 
-    public final ProductMeasure GetProductMeasure() {
-        return this.productMeasure;
-    }
+    public final ProductMeasure GetProductMeasure() { return this.productMeasure; }
+
+    public final boolean IsAdult() { return this.isOnlyForAdult; }
 
     @Override
     public final String toString() {

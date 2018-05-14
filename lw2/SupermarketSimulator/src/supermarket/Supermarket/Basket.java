@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class Basket {
 
-//    List<Integer> products = new ArrayList<>();
     private final Map<Integer, Integer> products = new HashMap<>();
 
 
@@ -16,7 +15,6 @@ public class Basket {
     }
 
     public final void DeleteProduct(int productId, int count) {
-        //this.products.remove((Integer) productId);
         int storeCount = this.products.get(productId);
         if (storeCount >= count) {
             this.products.put(productId, this.products.get(productId) - count);
@@ -25,6 +23,10 @@ public class Basket {
 
     public final int BasketSize() {
         return this.products.size();
+    }
+
+    public final Map<Integer, Integer> GetContent() {
+        return products;
     }
 
     public final int[] ToIntArray() {
@@ -36,10 +38,4 @@ public class Basket {
         return ret;
     }
 
-    /*
-    @Override
-    public final String toString() {
-        String productsInfo = "";
-        return productsInfo;
-    }*/
 }

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
 
+import utils.Logger;
 import utils.RandomUtil;
-import utils.Datetime;
 
 import supermarket.Customer.*;
 import supermarket.Product.*;
@@ -34,7 +34,7 @@ public class Supermarket {
 
         if (!this.isOpen) {
             openMarket();
-            logger("market is opened!");
+            Logger.show("market is opened!");
             configureMarket();
         }
 
@@ -57,11 +57,14 @@ public class Supermarket {
             case SupermarketEvent.EVENT_CUSTOMER_LEFT_QUEE:
                 randomCustomerLeftQuee();
                 break;
+            case SupermarketEvent.EVENT_CUSTOMER_SERVE_NEXT:
+                serveNextCustomerFromQuee();
+                break;
         }
     }
 
     private void configureMarket() {
-        logger("Add products to Supermarket stock");
+        Logger.show("Add products to Supermarket stock");
         productStock.GenerateRandomProductStore();
     }
 
@@ -77,7 +80,7 @@ public class Supermarket {
         );
 
         customers.add(customer);
-        logger("new customer (id: " + customer.getId() + ") arrived!");
+        Logger.show("new customer (id: " + customer.getId() + ") arrived!");
     }
 
     private void removeRandomCustomer() {
@@ -85,7 +88,7 @@ public class Supermarket {
             int rndCustomerIndex = RandomUtil.getRandomInt(0, customers.size());
             Customer rndCustomer = customers.get(rndCustomerIndex);
             customers.remove(rndCustomerIndex);
-            logger("customer (id: " + rndCustomer.getId() + ") came out!");
+            Logger.show("customer (id: " + rndCustomer.getId() + ") came out!");
         }
     }
 
@@ -101,7 +104,7 @@ public class Supermarket {
             if (productStock.deductProduct(rndProductIndex, rndProductCount)) {
                 rndCustomer.putProductInBasket(rndProductIndex, rndProductCount);
                 Product product = productStock.GetProductById(rndProductIndex);
-                logger("customer (id: " + rndCustomer.getId() + ") put in basket: \n"
+                Logger.show("customer (id: " + rndCustomer.getId() + ") put in basket: "
                         + product.toString() + " (" + rndProductCount + " " + product.GetProductMeasure() + ")");
             }
         }
@@ -120,7 +123,7 @@ public class Supermarket {
                 rndCustomer.cameOutProductInBasket(rndProductIndex, rndProductCount);
                 productStock.returnProduct(rndProductIndex, rndProductCount);
                 Product product = productStock.GetProductById(rndProductIndex);
-                logger("customer (id: " + rndCustomer.getId() + ") came out from basket: \n"
+                Logger.show("customer (id: " + rndCustomer.getId() + ") came out from basket: "
                         + product.toString() + " (" + rndProductCount + " " + product.GetProductMeasure() + ")");
             }
         }
@@ -132,7 +135,7 @@ public class Supermarket {
             Customer rndCustomer = customers.get(rndCustomerIndex);
             if (rndCustomer.issetProductsInBasket()) {
                 cashDesk.addCustomerToQuee(rndCustomer.getId());
-                logger("customer (id: " + rndCustomer.getId() + ") join to query");
+                Logger.show("customer (id: " + rndCustomer.getId() + ") join to query");
             }
         }
     }
@@ -142,22 +145,19 @@ public class Supermarket {
             int rndCustomerIndex = RandomUtil.getRandomInt(0, customers.size());
             Customer rndCustomer = customers.get(rndCustomerIndex);
             cashDesk.removeCustomerFromQuee(rndCustomer.getId());
-            logger("customer (id: " + rndCustomer.getId() + ") left to cash desk quee");
+            Logger.show("customer (id: " + rndCustomer.getId() + ") left to cash desk quee");
         }
     }
 
-    /*
-     private serveNextCustomerFromQuee() {
+    private void serveNextCustomerFromQuee() {
+        if (customers.size() > 0) {
+            cashDesk.serveNextCustomer(customers, productStock);
+        }
         // get first client from quee
         // check basket count & total basket price and client bonuses + cash
         // check client type and product type - if caution - remove product from basket & return to market
         // payment if check good - add bonuses if product have it, add to stat
         // clear basket
      }
-    */
-
-    // todo: logger to singleton
-    private void logger(String action) {
-        System.out.println("[" + Datetime.getCurrentDatetime() + "]" + " - " + action);
-    }
+    
 }

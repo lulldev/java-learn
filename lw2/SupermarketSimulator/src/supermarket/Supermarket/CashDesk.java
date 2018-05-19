@@ -38,24 +38,37 @@ class CashDesk {
 
     public void serveNextCustomer(List<Customer> customers, ProductStock productStock) {
         if (customersQueeIds.size() > 0) {
-            int targetCustomerId = customersQueeIds.get(0);
+            int targetCustomerId = customersQueeIds.get(customersQueeIds.size() - 1);
             List<Product> productList = productStock.GetProductList();
             for(Customer customer : customers) {
                 if (customer.getId() == targetCustomerId) {
                     Basket clientBasket = customer.getBasket();
-                    clientBasket.GetContent().forEach((productId, productCount) -> {
-                        Logger.show("serve customer (id: " + customer.getId() + "):");
-                        for(Product stockProduct : productList) {
-                            if ((stockProduct.GetProductId() == productId) &&
-                                    (!customer.IsAdult() && stockProduct.IsAdult())) {
-                                System.out.println("-> " + stockProduct.toString() + " " + productCount +
-                                        " " + stockProduct.GetProductMeasure() + " price: " // todo
-                                );
+
+                    if (clientBasket.BasketSize() > 0) {
+                        Logger.show("serve customer id: " + customer.getId() +
+                                        ", type: " + customer.getCustomerType());
+                        clientBasket.GetContent().forEach((productId, productCount) -> {
+                            for (Product stockProduct : productList) {
+                                if (stockProduct.GetProductId() == (productId + 1)) {
+                                    if (!customer.IsAdult() && stockProduct.IsAdult()) {
+                                        System.out.println("[!] Reject adult product for children - " + stockProduct.toString());
+                                        productStock.returnProduct(stockProduct.GetProductId(), productCount);
+                                        continue;
+                                    }
+                                    System.out.println("customer cash = " + customer.getCash());
+                                    System.out.println("product total = " +
+                                            (stockProduct.GetProductPrice().multiply(new BigDecimal(productCount))));
+                                    System.out.println("-> buy "  + stockProduct.toString() + " (" + productCount +
+                                            ") " + stockProduct.GetProductMeasure() + ", price: " + stockProduct.GetProductPrice()
+                                    );
+                                }
                             }
-                        }
-                    });
+                        });
+                        customer.clearBasket();
+                    }
                 }
             }
+            customersQueeIds.remove(customersQueeIds.size() - 1);
         }
     }
 }

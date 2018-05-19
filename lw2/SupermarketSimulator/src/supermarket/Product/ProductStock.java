@@ -56,7 +56,6 @@ public class ProductStock {
     }
 
     private void FillProductList() {
-        // todo: где делать скидки при генерации?
         Discount discount = new Discount();
 
         productList.add(new Product(1, "Bread", discount, new BigDecimal(10), false, ProductMeasure.PIECES));

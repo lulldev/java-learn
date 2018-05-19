@@ -1,4 +1,7 @@
 package supermarket.Supermarket;
 
-class PaymentMethod {
+public enum PaymentMethod {
+    Cash,
+    Card,
+    Bonuses,
 }

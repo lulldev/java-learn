@@ -1,5 +1,7 @@
 package supermarket.Supermarket;
 //import supermarket.Product.Product;
+import supermarket.Product.Product;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +16,12 @@ public class Basket {
         this.products.put(productId, count);
     }
 
-    public final void DeleteProduct(int productId, int count) {
-        int storeCount = this.products.get(productId);
-        if (storeCount >= count) {
-            this.products.put(productId, this.products.get(productId) - count);
-        }
+    public final void DeleteProduct(int productId) {
+        this.products.remove(productId);
+    }
+
+    public final void ClearBasket() {
+        this.products.clear();
     }
 
     public final int BasketSize() {

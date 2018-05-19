@@ -42,15 +42,15 @@ public class Supermarket {
             case SupermarketEvent.EVENT_CUSTOMER_CAME_IN:
                 addRandomCustomer();
                 break;
-            case SupermarketEvent.EVENT_CUSTOMER_CAME_OUT:
-                removeRandomCustomer();
-                break;
+//            case SupermarketEvent.EVENT_CUSTOMER_CAME_OUT:
+//                removeRandomCustomer();
+//                break;
             case SupermarketEvent.EVENT_CUSTOMER_PUT_IN_BUSKET:
                 putInRandomProductForCustomer();
                 break;
-            case SupermarketEvent.EVENT_CUSTOMER_LAID_BUSKET:
-                cameOutRandomCustomerProduct();
-                break;
+//            case SupermarketEvent.EVENT_CUSTOMER_LAID_BUSKET:
+//                cameOutRandomCustomerProduct();
+//                break;
             case SupermarketEvent.EVENT_CUSTOMER_JOIN_QUEE:
                 randomCustomerJoinQuee();
                 break;
@@ -70,13 +70,14 @@ public class Supermarket {
 
     private void addRandomCustomer() {
         CustomerType customerType = CustomerType.getByCode((RandomUtil.getRandomInt(0, CustomerType.values().length)));
-        int cash = RandomUtil.getRandomInt(0, 100);
-        int bonuses = RandomUtil.getRandomInt(0, 10);
+        int cash = RandomUtil.getRandomInt(50, 500);
+        int bonuses = (customerType == CustomerType.Retired) ?
+                RandomUtil.getRandomInt(0, 50) : 0;
 
         Customer customer = new Customer(
-                customerType,
+                CustomerType.Child,
                 new BigDecimal(cash),
-                new BigDecimal(bonuses)
+                bonuses
         );
 
         customers.add(customer);
@@ -110,25 +111,6 @@ public class Supermarket {
         }
     }
 
-    private void cameOutRandomCustomerProduct() {
-        if (customers.size() > 0) {
-            int rndCustomerIndex = RandomUtil.getRandomInt(0, customers.size());
-            Customer rndCustomer = customers.get(rndCustomerIndex);
-            Basket customerBasket = rndCustomer.getBasket();
-            int basketSize = customerBasket.BasketSize();
-
-            if (basketSize > 0) {
-                int rndProductIndex = RandomUtil.getRandomFromArray(customerBasket.ToIntArray());
-                int rndProductCount = RandomUtil.getRandomInt(1, 3);
-                rndCustomer.cameOutProductInBasket(rndProductIndex, rndProductCount);
-                productStock.returnProduct(rndProductIndex, rndProductCount);
-                Product product = productStock.GetProductById(rndProductIndex);
-                Logger.show("customer (id: " + rndCustomer.getId() + ") came out from basket: "
-                        + product.toString() + " (" + rndProductCount + " " + product.GetProductMeasure() + ")");
-            }
-        }
-    }
-
     private void randomCustomerJoinQuee() {
         if (customers.size() > 0) {
             int rndCustomerIndex = RandomUtil.getRandomInt(0, customers.size());
@@ -153,11 +135,6 @@ public class Supermarket {
         if (customers.size() > 0) {
             cashDesk.serveNextCustomer(customers, productStock);
         }
-        // get first client from quee
-        // check basket count & total basket price and client bonuses + cash
-        // check client type and product type - if caution - remove product from basket & return to market
-        // payment if check good - add bonuses if product have it, add to stat
-        // clear basket
      }
     
 }

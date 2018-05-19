@@ -1,7 +1,6 @@
 package supermarket.Customer;
 
 public enum CustomerType {
-    UNKNOWN(-1),
     Child(0),
     Adult(1),
     Retired(2);
@@ -18,6 +17,6 @@ public enum CustomerType {
                 return type;
             }
         }
-        return UNKNOWN;
+        return Adult;
     }
 }

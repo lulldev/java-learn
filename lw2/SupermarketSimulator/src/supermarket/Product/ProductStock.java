@@ -56,13 +56,51 @@ public class ProductStock {
     }
 
     private void FillProductList() {
-        Discount discount = new Discount();
 
-        productList.add(new Product(1, "Bread", discount, new BigDecimal(10), false, ProductMeasure.PIECES));
-        productList.add(new Product(2, "Banan", discount, new BigDecimal(25), false, ProductMeasure.KG));
-        productList.add(new Product(3, "Beer", discount, new BigDecimal(30), true, ProductMeasure.PIECES));
-        productList.add(new Product(4, "Cigaro", discount, new BigDecimal(50), true, ProductMeasure.PIECES));
-        productList.add(new Product(5, "Chocolate", discount, new BigDecimal(40), false, ProductMeasure.PIECES));
+        productList.add(new Product(
+                1,
+                "Bread",
+                new Discount(0),
+                new BigDecimal(10),
+                false,
+                ProductMeasure.PIECES)
+        );
+
+        productList.add(new Product(
+                2,
+                "Banan",
+                new Discount(10),
+                new BigDecimal(25),
+                false,
+                ProductMeasure.KG)
+        );
+
+        productList.add(new Product(
+                3,
+                "Beer",
+                new Discount(5),
+                new BigDecimal(30),
+                true,
+                ProductMeasure.PIECES)
+        );
+
+        productList.add(new Product(
+                4,
+                "Cigaro",
+                new Discount(0),
+                new BigDecimal(50),
+                true,
+                ProductMeasure.PIECES)
+        );
+
+        productList.add(new Product(
+                5,
+                "Chocolate",
+                new Discount(15),
+                new BigDecimal(40),
+                false,
+                ProductMeasure.PIECES)
+        );
     }
 
 }

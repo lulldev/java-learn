@@ -17,11 +17,12 @@ public class Main {
                 supermarket.runMarketScenario();
                 if (++seconds == (supermarket.getWorkingTimeMinutes() * 120)) {
                     timer.cancel();
+                    supermarket.showReport();
                 }
             }
         }, 1000, 1000);
 
         supermarket.closeMarket();
-        // todo: logger(supermarket.showReport());
+        supermarket.showReport();
     }
 }

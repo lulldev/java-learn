@@ -9,6 +9,7 @@ import utils.RandomUtil;
 
 import supermarket.Customer.*;
 import supermarket.Product.*;
+import supermarket.Supermarket.Report;
 
 public class Supermarket {
 
@@ -29,6 +30,7 @@ public class Supermarket {
     private final List<Customer> customers = new ArrayList<>();
     private final ProductStock productStock = new ProductStock();
     private CashDesk cashDesk = new CashDesk();
+    private Report report = new Report();
 
     public void runMarketScenario() {
 
@@ -75,7 +77,7 @@ public class Supermarket {
                 RandomUtil.getRandomInt(0, 50) : 0;
 
         Customer customer = new Customer(
-                CustomerType.Child,
+                customerType,
                 new BigDecimal(cash),
                 bonuses
         );
@@ -133,8 +135,12 @@ public class Supermarket {
 
     private void serveNextCustomerFromQuee() {
         if (customers.size() > 0) {
-            cashDesk.serveNextCustomer(customers, productStock);
+            cashDesk.serveNextCustomer(customers, productStock, report);
         }
-     }
+    }
+
+    public void showReport() {
+        this.report.printReport();
+    }
     
 }

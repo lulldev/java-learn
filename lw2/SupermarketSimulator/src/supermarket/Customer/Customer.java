@@ -68,4 +68,16 @@ public class Customer {
         return this.customerType == CustomerType.Adult || this.customerType == CustomerType.Retired;
     }
 
+    public final boolean IsRetired() {
+        return this.customerType == CustomerType.Retired;
+    }
+
+    public final void UpdateCash(BigDecimal newCashVal) {
+        this.cash = newCashVal;
+    }
+
+    public final void UpdateBonuses(int newBonusesVal) {
+        this.bonuses = newBonusesVal;
+    }
+
 }

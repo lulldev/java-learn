@@ -1,14 +1,13 @@
 package supermarket;
 
 import supermarket.supermarket.Supermarket;
-
+import supermarket.supermarket.SupermarketImpl;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Main {
-
     public static void main(String[] args) {
-        Supermarket supermarket = new Supermarket();
+        SupermarketImpl supermarket = new SupermarketImpl();
         final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             int seconds = 0;
@@ -22,6 +21,5 @@ public class Main {
                 }
             }
         }, 1000, 1000);
-
     }
 }

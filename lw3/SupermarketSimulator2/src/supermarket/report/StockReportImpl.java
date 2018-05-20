@@ -1,25 +1,27 @@
 package supermarket.report;
-import supermarket.stat.StockStat;
+
+import supermarket.product.Product;
 import supermarket.product.ProductStock;
-import supermarket.stat.StockStatImpl;
+import supermarket.stat.StockStat;
 
-import java.util.Map;
+public class StockReportImpl implements Report {
 
-public class ReportImpl implements Report {
+    private StockStat stockStat;
+    private ProductStock productStock;
 
-    private StockStat stockStat = new StockStatImpl();
-    private ProductStock productStock = new ProductStock();
-
-    public final void addSoldProducts(Map<Integer, Integer> soldProducts) {
-        stockStat.addSoldProducts(soldProducts);
+    public StockReportImpl(StockStat stockStat, ProductStock productStock) {
+        this.stockStat = stockStat;
+        this.productStock = productStock;
     }
 
     private final String getSoldProductReport() {
         final String[] outputReportData = {"Stock report (sold products):\n"};
         final int[] totalCount = {0};
         stockStat.getSoldProducts().forEach((productId, productCount) -> {
-//            product product = productStock.GetProductById(productId);
-            outputReportData[0] += " - " + productId + " - " + productCount + " " + " cccc " + "\n";
+            outputReportData[0]
+                    += " - " + productStock.GetProductById(productId).getProductName()
+                    + productCount + " "
+                    + "(" + productStock.GetProductById(productId).getProductMeasure() + ")\n";
             totalCount[0] += productCount;
         });
         outputReportData[0] += "-----------------\n";
@@ -28,7 +30,6 @@ public class ReportImpl implements Report {
     }
 
     public final void printReport() {
-        System.out.println("report:");
         System.out.println("---------------------------------------");
         System.out.println(getSoldProductReport());
         System.out.println("---------------------------------------");

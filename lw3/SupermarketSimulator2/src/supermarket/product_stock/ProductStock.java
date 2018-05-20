@@ -1,7 +1,6 @@
 package supermarket.product_stock;
 
 import supermarket.product.Product;
-
 import java.util.List;
 
 public interface ProductStock {

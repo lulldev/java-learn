@@ -5,12 +5,14 @@ import java.util.List;
 import java.math.BigDecimal;
 import supermarket.cash_desk.CashDeskImpl;
 import supermarket.report.Report;
-import supermarket.report.ReportImpl;
 import supermarket.customer.Customer;
 import supermarket.customer.CustomerImpl;
 import supermarket.customer.CustomerType;
 import supermarket.product.Product;
 import supermarket.product.ProductStock;
+import supermarket.report.StockReportImpl;
+import supermarket.stat.StockStat;
+import supermarket.stat.StockStatImpl;
 import utils.Logger;
 import utils.RandomUtil;
 
@@ -23,7 +25,7 @@ public class SupermarketImpl implements Supermarket {
     private final List<Customer> customers = new ArrayList<>();
     private final ProductStock productStock = new ProductStock();
     private CashDeskImpl cashDesk = new CashDeskImpl();
-    private Report report = new ReportImpl();
+    private StockStat stockStat = new StockStatImpl();
 
     public void openMarket() {
         this.isOpen = true;
@@ -35,7 +37,8 @@ public class SupermarketImpl implements Supermarket {
         return workingTimeMinutes;
     }
     public void showReport() {
-        this.report.printReport();
+        Report stockReport = new StockReportImpl(this.stockStat, this.productStock);
+        stockReport.printReport();
     }
 
     public void runMarketScenario() {
@@ -136,7 +139,7 @@ public class SupermarketImpl implements Supermarket {
 
     private void serveNextCustomerFromQuee() {
         if (customers.size() > 0) {
-            cashDesk.serveNextCustomer(customers, productStock, report);
+            cashDesk.serveNextCustomer(customers, productStock, stockStat);
         }
     }
 

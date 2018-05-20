@@ -6,14 +6,12 @@ import supermarket.backet_calculator.BacketCalculatorImpl;
 import supermarket.customer.Customer;
 import supermarket.payment.Bill;
 import supermarket.payment.PaymentMethod;
-import supermarket.product.Product;
 import supermarket.product.ProductStock;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 import supermarket.report.Report;
+import supermarket.stat.StockStat;
 import utils.Logger;
 
 
@@ -36,7 +34,7 @@ public class CashDeskImpl implements CashDesk {
         this.customersQueeIds = result;
     }
 
-    public void serveNextCustomer(List<Customer> customers, ProductStock productStock, Report report) {
+    public void serveNextCustomer(List<Customer> customers, ProductStock productStock, StockStat stockStat) {
         if (customersQueeIds.size() > 0) {
             int targetCustomerId = customersQueeIds.get(0);
             for (Customer customer : customers) {
@@ -62,14 +60,14 @@ public class CashDeskImpl implements CashDesk {
                         customer.pay(new Bill(PaymentMethod.Cash, totalPrice));
                         Logger.message("[+] payment complete", false);
                         Logger.message("-> customer remain cash " + customer.getCash(), false);
-//                            report.addSoldProducts(clientBasket.getContent());
+                        stockStat.addSoldProducts(clientBasket.getContent());
                     } else if (customer.getCash().compareTo(totalPrice) < 0
                             && (customer.isRetired() && (totalPrice.compareTo(new BigDecimal(customer.getBonuses())) < 0))) {
                         Logger.message("-> customer use bonuses: " + customer.getBonuses(), false);
                         customer.pay(new Bill(PaymentMethod.Bonuses, totalPrice));
                         Logger.message("[+] payment complete", false);
                         Logger.message("-> customer remain bonuses " + customer.getBonuses(), false);
-//                            report.addSoldProducts(clientBasket.getContent());
+                        stockStat.addSoldProducts(clientBasket.getContent());
                     } else {
                         Logger.message("[!] Insufficient funds", false);
                         Logger.message("-> Products from basket return to stock", false);

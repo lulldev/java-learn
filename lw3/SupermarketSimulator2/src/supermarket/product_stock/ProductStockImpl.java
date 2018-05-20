@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProductStockImpl {
+public class ProductStockImpl implements ProductStock {
 
     private final Map<Integer, Integer> productStore = new HashMap<>();
     private final List<Product> productList = new ArrayList<>();

@@ -34,12 +34,15 @@ public class SupermarketImpl implements Supermarket {
     public int getWorkingTimeMinutes() {
         return workingTimeMinutes;
     }
+    public void showReport() {
+        this.report.printReport();
+    }
 
     public void runMarketScenario() {
 
         if (!this.isOpen) {
             openMarket();
-            Logger.show("market is opened!");
+            Logger.message("market is opened!", true);
             configureMarket();
         }
 
@@ -63,7 +66,7 @@ public class SupermarketImpl implements Supermarket {
     }
 
     private void configureMarket() {
-        Logger.show("Add products to supermarket stock");
+        Logger.message("Add products to supermarket stock", true);
         productStock.GenerateRandomProductStore();
     }
 
@@ -80,7 +83,7 @@ public class SupermarketImpl implements Supermarket {
         );
 
         customers.add(customer);
-        Logger.show("new customer (id: " + customer.getId() + ") arrived!");
+        Logger.message("new customer (id: " + customer.getId() + ") arrived!", true);
     }
 
     private void removeRandomCustomer() {
@@ -88,7 +91,7 @@ public class SupermarketImpl implements Supermarket {
             int rndCustomerIndex = RandomUtil.getRandomInt(0, customers.size());
             Customer rndCustomer = customers.get(rndCustomerIndex);
             customers.remove(rndCustomerIndex);
-            Logger.show("customer (id: " + rndCustomer.getId() + ") came out!");
+            Logger.message("customer (id: " + rndCustomer.getId() + ") came out!", true);
         }
     }
 
@@ -104,8 +107,9 @@ public class SupermarketImpl implements Supermarket {
             if (productStock.deductProduct(rndProductIndex, rndProductCount)) {
                 rndCustomer.putProductInBasket(rndProductIndex, rndProductCount);
                 Product product = productStock.GetProductById(rndProductIndex);
-                Logger.show("customer (id: " + rndCustomer.getId() + ") put in basket: "
-                        + product.toString() + " (" + rndProductCount + " " + product.getProductMeasure() + ")");
+                Logger.message("customer (id: " + rndCustomer.getId() + ") put in basket: "
+                        + product.toString() + " (" + rndProductCount + " " + product.getProductMeasure() + ")"
+                        , true);
             }
         }
     }
@@ -116,7 +120,7 @@ public class SupermarketImpl implements Supermarket {
             Customer rndCustomer = customers.get(rndCustomerIndex);
             if (rndCustomer.issetProductsInBasket()) {
                 cashDesk.addCustomerToQuee(rndCustomer.getId());
-                Logger.show("customer (id: " + rndCustomer.getId() + ") join to query");
+                Logger.message("customer (id: " + rndCustomer.getId() + ") join to query", true);
             }
         }
     }
@@ -126,7 +130,7 @@ public class SupermarketImpl implements Supermarket {
             int rndCustomerIndex = RandomUtil.getRandomInt(0, customers.size());
             Customer rndCustomer = customers.get(rndCustomerIndex);
             cashDesk.removeCustomerFromQuee(rndCustomer.getId());
-            Logger.show("customer (id: " + rndCustomer.getId() + ") left to cash desk quee");
+            Logger.message("customer (id: " + rndCustomer.getId() + ") left to cash desk quee", true);
         }
     }
 
@@ -136,8 +140,5 @@ public class SupermarketImpl implements Supermarket {
         }
     }
 
-    public void showReport() {
-        this.report.printReport();
-    }
-    
+
 }

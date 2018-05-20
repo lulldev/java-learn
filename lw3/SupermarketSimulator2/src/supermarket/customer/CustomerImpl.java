@@ -2,6 +2,9 @@ package supermarket.customer;
 
 import supermarket.backet.Backet;
 import supermarket.backet.BacketImpl;
+import supermarket.payment.Bill;
+import supermarket.payment.PaymentMethod;
+
 import java.math.BigDecimal;
 
 public class CustomerImpl implements Customer {
@@ -61,12 +64,12 @@ public class CustomerImpl implements Customer {
         return this.customerType == CustomerType.Retired;
     }
 
-    public final void updateCash(BigDecimal newCashVal) {
-        this.cash = newCashVal;
+    public final void pay(Bill bill) {
+        if (bill.getPaymentMethod() == PaymentMethod.Cash) {
+            this.cash = this.cash.subtract(bill.getBillTotal());
+        }
+        else if (bill.getPaymentMethod() == PaymentMethod.Bonuses) {
+            this.bonuses -= bill.getBillTotal().intValue();
+        }
     }
-
-    public final void updateBonuses(int newBonusesVal) {
-        this.bonuses = newBonusesVal;
-    }
-
 }

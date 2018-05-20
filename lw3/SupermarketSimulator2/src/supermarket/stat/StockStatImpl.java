@@ -1,6 +1,5 @@
 package supermarket.stat;
 
-import supermarket.stat.StockStat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,10 +9,11 @@ public class StockStatImpl implements StockStat {
 
     public final void addSoldProducts(Map<Integer, Integer> recSoldProducts) {
         recSoldProducts.forEach((productId, productCount) -> {
-            this.soldProducts.put(productId, productCount);
-//            if (this.soldProducts.containsKey(productId)) {
-//                this.soldProducts.put(productId, this.soldProducts.get(productId) + productCount);
-//            }
+            if (this.soldProducts.containsKey(productId)) {
+                this.soldProducts.put(productId, this.soldProducts.get(productId) + productCount);
+            } else {
+                this.soldProducts.put(productId, productCount);
+            }
         });
     }
 

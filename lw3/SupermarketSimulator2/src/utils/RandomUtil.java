@@ -4,11 +4,7 @@ import java.util.Random;
 
 
 public class RandomUtil {
-    /**
-     * @param lowerBound
-     * @param upperBound
-     * @return
-     */
+
     public static int getRandomInt(int lowerBound, int upperBound) {
         return (int) (Math.random() * (upperBound - lowerBound)) + lowerBound;
     }

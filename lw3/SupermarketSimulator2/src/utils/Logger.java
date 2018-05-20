@@ -1,7 +1,8 @@
 package utils;
 
 public class Logger {
-    public static void show(String description) {
-        System.out.println("[" + Datetime.getCurrentDatetime() + "]" + " - " + description);
+    public static void message(String description, boolean isShowTimestamp) {
+        String datetime = isShowTimestamp ? "[" + Datetime.getCurrentDatetime() + "]" + " - " : "";
+        System.out.println(datetime + description);
     }
 }

@@ -8,4 +8,5 @@ public interface ProductStock {
     Product getProductById(int productId);
     boolean deductProduct(int productId, int count);
     void returnProduct(int productId, int count);
+    void generateRandomProductStore();
 }

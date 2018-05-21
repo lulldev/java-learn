@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
 import supermarket.cash_desk.CashDeskImpl;
+import supermarket.product_stock.ProductStock;
+import supermarket.product_stock.ProductStockImpl;
 import supermarket.report.Report;
 import supermarket.customer.Customer;
 import supermarket.customer.CustomerImpl;
 import supermarket.customer.CustomerType;
 import supermarket.product.Product;
-import supermarket.product.ProductStock;
 import supermarket.report.StockReportImpl;
 import supermarket.stat.StockStat;
 import supermarket.stat.StockStatImpl;
@@ -23,7 +24,7 @@ public class SupermarketImpl implements Supermarket {
     private final SupermarketEvent marketEvent = new SupermarketEvent();;
     private boolean isOpen;
     private final List<Customer> customers = new ArrayList<>();
-    private final ProductStock productStock = new ProductStock();
+    private final ProductStock productStock = new ProductStockImpl();
     private CashDeskImpl cashDesk = new CashDeskImpl();
     private StockStat stockStat = new StockStatImpl();
 
@@ -70,7 +71,7 @@ public class SupermarketImpl implements Supermarket {
 
     private void configureMarket() {
         Logger.message("Add products to supermarket stock", true);
-        productStock.GenerateRandomProductStore();
+        productStock.generateRandomProductStore();
     }
 
     private void addRandomCustomer() {
@@ -103,13 +104,13 @@ public class SupermarketImpl implements Supermarket {
             int rndCustomerIndex = RandomUtil.getRandomInt(0, customers.size());
             Customer rndCustomer = customers.get(rndCustomerIndex);
 
-            List<Product> productList = productStock.GetProductList();
+            List<Product> productList = productStock.getProductList();
             int rndProductIndex = RandomUtil.getRandomInt(0, productList.size());
             int rndProductCount = RandomUtil.getRandomInt(1, 5);
 
             if (productStock.deductProduct(rndProductIndex, rndProductCount)) {
                 rndCustomer.putProductInBasket(rndProductIndex, rndProductCount);
-                Product product = productStock.GetProductById(rndProductIndex);
+                Product product = productStock.getProductById(rndProductIndex);
                 Logger.message("customer (id: " + rndCustomer.getId() + ") put in basket: "
                         + product.toString() + " (" + rndProductCount + " " + product.getProductMeasure() + ")"
                         , true);

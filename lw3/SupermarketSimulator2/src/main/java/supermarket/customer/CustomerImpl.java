@@ -4,6 +4,7 @@ import supermarket.backet.Backet;
 import supermarket.backet.BacketImpl;
 import supermarket.payment.Bill;
 import supermarket.payment.PaymentMethod;
+import utils.RandomUtil;
 
 import java.math.BigDecimal;
 
@@ -16,7 +17,7 @@ public class CustomerImpl implements Customer {
     private final Backet basket = new BacketImpl();
 
     public CustomerImpl(CustomerType customerType, BigDecimal cash, int bonuses) {
-        this.id = (int) System.currentTimeMillis();
+        this.id = RandomUtil.getRandomInt(1, 10000000);
         this.customerType = customerType;
         this.cash = cash;
         this.bonuses = bonuses;

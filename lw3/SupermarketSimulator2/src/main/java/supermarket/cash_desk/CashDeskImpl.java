@@ -6,11 +6,12 @@ import supermarket.backet_calculator.BacketCalculatorImpl;
 import supermarket.customer.Customer;
 import supermarket.payment.Bill;
 import supermarket.payment.PaymentMethod;
-import supermarket.product.ProductStock;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import supermarket.report.Report;
+
+import supermarket.product_stock.ProductStock;
 import supermarket.stat.StockStat;
 import utils.Logger;
 

@@ -1,9 +1,8 @@
 package supermarket.cash_desk;
 
 import supermarket.customer.Customer;
-import supermarket.product.ProductStock;
-import supermarket.report.Report;
 import supermarket.stat.StockStat;
+import supermarket.product_stock.ProductStock;
 
 import java.util.List;
 

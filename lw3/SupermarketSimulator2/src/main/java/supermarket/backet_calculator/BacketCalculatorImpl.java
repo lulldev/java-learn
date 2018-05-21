@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import supermarket.product.Product;
-import supermarket.product.ProductStock;
+import supermarket.product_stock.ProductStock;
 import utils.Logger;
 
 
@@ -25,7 +25,7 @@ public class BacketCalculatorImpl implements BacketCalculator {
     }
 
     public BigDecimal getBacketTotal() {
-        List<Product> productList = this.currentStock.GetProductList();
+        List<Product> productList = this.currentStock.getProductList();
         this.backetContent.forEach((productId, productCount) -> {
             for (Product stockProduct : productList) {
                 if (stockProduct.getProductId() == (productId + 1)) {
@@ -38,7 +38,7 @@ public class BacketCalculatorImpl implements BacketCalculator {
     }
 
     public void calculateBacket() {
-        List<Product> productList = this.currentStock.GetProductList();
+        List<Product> productList = this.currentStock.getProductList();
         this.backetContent.forEach((productId, productCount) -> {
             for (Product stockProduct : productList) {
                 if (stockProduct.getProductId() == (productId + 1)) {

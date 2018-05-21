@@ -1,7 +1,6 @@
 package supermarket.report;
 
-import supermarket.product.Product;
-import supermarket.product.ProductStock;
+import supermarket.product_stock.ProductStock;
 import supermarket.stat.StockStat;
 
 public class StockReportImpl implements Report {
@@ -19,12 +18,12 @@ public class StockReportImpl implements Report {
         final int[] totalCount = {0};
         stockStat.getSoldProducts().forEach((productId, productCount) -> {
             outputReportData[0]
-                    += " - " + productStock.GetProductById(productId).getProductName()
-                    + productCount + " "
-                    + "(" + productStock.GetProductById(productId).getProductMeasure() + ")\n";
+                    += " - " + productStock.getProductById(productId).getProductName()
+                    + " " + productCount + " "
+                    + "(" + productStock.getProductById(productId).getProductMeasure() + ")\n";
             totalCount[0] += productCount;
         });
-        outputReportData[0] += "-----------------\n";
+        outputReportData[0] += "---------------------------------------\n";
         outputReportData[0] += "Total sold: " + totalCount[0] + "\n";
         return outputReportData[0];
     }

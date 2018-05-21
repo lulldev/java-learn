@@ -27,12 +27,4 @@ public class BacketImpl implements Backet {
         return products;
     }
 
-    public final int[] toIntArray() {
-        int[] ret = new int[this.products.size()];
-        int i = 0;
-        for (Integer key : this.products.keySet()) {
-            ret[i++] = key;
-        }
-        return ret;
-    }
 }

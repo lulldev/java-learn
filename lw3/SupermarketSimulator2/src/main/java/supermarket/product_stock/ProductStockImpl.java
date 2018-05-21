@@ -4,6 +4,7 @@ import supermarket.product.Product;
 import supermarket.product.ProductImpl;
 import supermarket.product.ProductMeasure;
 import supermarket.payment.Discount;
+import utils.Logger;
 import utils.RandomUtil;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class ProductStockImpl implements ProductStock {
 
     private final Map<Integer, Integer> productStore = new HashMap<>();
     private final List<Product> productList = new ArrayList<>();
+
+    public final void addProductToList(Product product) { productList.add(product); }
 
     public final List<Product> getProductList() {
         return productList;
@@ -53,17 +56,16 @@ public class ProductStockImpl implements ProductStock {
             randomCount = RandomUtil.getRandomInt(2, 20);
             productStore.put(newProduct.getProductId(), randomCount);
 
-            System.out.println(" Add product # " + newProduct.getProductId());
-            System.out.println(" Details: " + newProduct.getProductName() + ", price: " + newProduct.getProductPrice());
-            System.out.println(" Total count: " + randomCount);
-            System.out.println(" ---------------");
+            Logger.message(" Add product # " + newProduct.getProductId(), false);
+            Logger.message(" Details: " + newProduct.getProductName() + ", price: " + newProduct.getProductPrice(), false);
+            Logger.message(" Total count: " + randomCount, false);
+            Logger.message(" ---------------", false);
         }
     }
 
-    // todo:
     private void fillProductList() {
 
-        productList.add(new ProductImpl(
+        addProductToList(new ProductImpl(
                 1,
                 "Bread",
                 new Discount(0),
@@ -72,7 +74,7 @@ public class ProductStockImpl implements ProductStock {
                 ProductMeasure.PIECES)
         );
 
-        productList.add(new ProductImpl(
+        addProductToList(new ProductImpl(
                 2,
                 "Banan",
                 new Discount(10),
@@ -81,7 +83,7 @@ public class ProductStockImpl implements ProductStock {
                 ProductMeasure.KG)
         );
 
-        productList.add(new ProductImpl(
+        addProductToList(new ProductImpl(
                 3,
                 "Beer",
                 new Discount(5),
@@ -90,7 +92,7 @@ public class ProductStockImpl implements ProductStock {
                 ProductMeasure.PIECES)
         );
 
-        productList.add(new ProductImpl(
+        addProductToList(new ProductImpl(
                 4,
                 "Cigaro",
                 new Discount(0),
@@ -99,7 +101,7 @@ public class ProductStockImpl implements ProductStock {
                 ProductMeasure.PIECES)
         );
 
-        productList.add(new ProductImpl(
+        addProductToList(new ProductImpl(
                 5,
                 "Chocolate",
                 new Discount(15),

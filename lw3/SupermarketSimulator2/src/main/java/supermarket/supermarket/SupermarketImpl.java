@@ -76,13 +76,15 @@ public class SupermarketImpl implements Supermarket {
 
     private void addRandomCustomer() {
         CustomerType customerType = CustomerType.getByCode((RandomUtil.getRandomInt(0, CustomerType.values().length)));
-        int cash = RandomUtil.getRandomInt(50, 500);
+        int cash = RandomUtil.getRandomInt(50, 200);
+        int cardCash = RandomUtil.getRandomInt(50, 500);
         int bonuses = (customerType == CustomerType.Retired) ?
                 RandomUtil.getRandomInt(0, 50) : 0;
 
         CustomerImpl customer = new CustomerImpl(
                 customerType,
                 new BigDecimal(cash),
+                new BigDecimal(cardCash),
                 bonuses
         );
 

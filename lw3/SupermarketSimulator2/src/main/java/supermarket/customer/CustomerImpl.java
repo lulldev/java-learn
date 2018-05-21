@@ -13,13 +13,15 @@ public class CustomerImpl implements Customer {
     private int id;
     private CustomerType customerType;
     private BigDecimal cash;
+    private BigDecimal cardCash;
     private int bonuses;
     private final Backet basket = new BacketImpl();
 
-    public CustomerImpl(CustomerType customerType, BigDecimal cash, int bonuses) {
+    public CustomerImpl(CustomerType customerType, BigDecimal cash, BigDecimal cardCash, int bonuses) {
         this.id = RandomUtil.getRandomInt(1, 10000000);
         this.customerType = customerType;
         this.cash = cash;
+        this.cardCash = cardCash;
         this.bonuses = bonuses;
     }
 
@@ -34,6 +36,8 @@ public class CustomerImpl implements Customer {
     public BigDecimal getCash() {
         return this.cash;
     }
+
+    public BigDecimal getCardCash() { return this.cardCash; }
 
     public int getBonuses() {
         return this.bonuses;
@@ -68,6 +72,9 @@ public class CustomerImpl implements Customer {
     public final void pay(Bill bill) {
         if (bill.getPaymentMethod() == PaymentMethod.Cash) {
             this.cash = this.cash.subtract(bill.getBillTotal());
+        }
+        else if (bill.getPaymentMethod() == PaymentMethod.Card) {
+            this.cardCash = this.cardCash.subtract(bill.getBillTotal());
         }
         else if (bill.getPaymentMethod() == PaymentMethod.Bonuses) {
             this.bonuses -= bill.getBillTotal().intValue();

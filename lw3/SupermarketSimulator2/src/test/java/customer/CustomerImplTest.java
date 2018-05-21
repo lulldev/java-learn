@@ -17,6 +17,7 @@ public class CustomerImplTest extends Assert {
     private final Customer customer = new CustomerImpl(
             CustomerType.Child,
             new BigDecimal(100),
+            new BigDecimal(500),
             10);
 
     @Test
@@ -30,9 +31,10 @@ public class CustomerImplTest extends Assert {
     }
 
     @Test
-    public void getCash() {
-        assertEquals(customer.getCash(), new BigDecimal(100));
-    }
+    public void getCash() { assertEquals(customer.getCash(), new BigDecimal(100)); }
+
+    @Test
+    public void getCardCash() { assertEquals(customer.getCardCash(), new BigDecimal(500)); }
 
     @Test
     public void getBonuses() {
@@ -92,5 +94,9 @@ public class CustomerImplTest extends Assert {
         assertEquals(customer.getCash(), new BigDecimal(100));
         customer.pay(new Bill(PaymentMethod.Cash, new BigDecimal(10)));
         assertEquals(customer.getCash(), new BigDecimal(90));
+        customer.pay(new Bill(PaymentMethod.Card, new BigDecimal(100)));
+        assertEquals(customer.getCardCash(), new BigDecimal(400));
+        customer.pay(new Bill(PaymentMethod.Bonuses, new BigDecimal(10)));
+        assertEquals(customer.getBonuses(), new BigDecimal(0).intValue());
     }
 }

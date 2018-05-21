@@ -52,6 +52,7 @@ public class CashDeskImpl implements CashDesk {
 
                     Logger.message("-> backet total price: " + totalPrice, false);
                     Logger.message("-> Сustomer cash: " + customer.getCash(), false);
+                    Logger.message("-> Сustomer card cash: " + customer.getCardCash(), false);
                     if (customer.isRetired()) {
                         Logger.message("-> Сustomer bonus: " + customer.getBonuses(), false);
                     }
@@ -61,8 +62,18 @@ public class CashDeskImpl implements CashDesk {
                         customer.pay(new Bill(PaymentMethod.Cash, totalPrice));
                         Logger.message("[+] payment complete", false);
                         Logger.message("-> customer remain cash " + customer.getCash(), false);
+                        Logger.message("-> customer remain card cash " + customer.getCardCash(), false);
                         stockStat.addSoldProducts(clientBasket.getContent());
-                    } else if (customer.getCash().compareTo(totalPrice) < 0
+                    }
+                    else if (customer.getCardCash().compareTo(totalPrice) >= 0) {
+                        Logger.message("-> customer use card cash: " + customer.getCardCash(), false);
+                        customer.pay(new Bill(PaymentMethod.Card, totalPrice));
+                        Logger.message("[+] payment complete", false);
+                        Logger.message("-> customer remain cash " + customer.getCash(), false);
+                        Logger.message("-> customer remain card cash " + customer.getCardCash(), false);
+                        stockStat.addSoldProducts(clientBasket.getContent());
+                    }
+                    else if (customer.getCash().compareTo(totalPrice) < 0
                             && (customer.isRetired() && (totalPrice.compareTo(new BigDecimal(customer.getBonuses())) < 0))) {
                         Logger.message("-> customer use bonuses: " + customer.getBonuses(), false);
                         customer.pay(new Bill(PaymentMethod.Bonuses, totalPrice));

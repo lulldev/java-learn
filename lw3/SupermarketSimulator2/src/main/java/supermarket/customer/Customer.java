@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 public interface Customer {
     int getId();
     CustomerType getCustomerType();
+    BigDecimal getCardCash();
     BigDecimal getCash();
     int getBonuses();
     Backet getBasket();

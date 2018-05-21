@@ -39,7 +39,7 @@ public class SupermarketImpl implements Supermarket {
     }
     public void showReport() {
         Report stockReport = new StockReportImpl(this.stockStat, this.productStock);
-        stockReport.printReport();
+        stockReport.printReport(System.out);
     }
 
     public void runMarketScenario() {

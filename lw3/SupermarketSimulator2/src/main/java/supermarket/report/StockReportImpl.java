@@ -3,6 +3,9 @@ package supermarket.report;
 import supermarket.product_stock.ProductStock;
 import supermarket.stat.StockStat;
 
+import java.io.FileDescriptor;
+import java.io.PrintStream;
+
 public class StockReportImpl implements Report {
 
     private StockStat stockStat;
@@ -28,9 +31,9 @@ public class StockReportImpl implements Report {
         return outputReportData[0];
     }
 
-    public final void printReport() {
-        System.out.println("---------------------------------------");
-        System.out.println(getSoldProductReport());
-        System.out.println("---------------------------------------");
+    public final void printReport(PrintStream output) {
+        output.println("---------------------------------------");
+        output.println(getSoldProductReport());
+        output.println("---------------------------------------");
     }
 }

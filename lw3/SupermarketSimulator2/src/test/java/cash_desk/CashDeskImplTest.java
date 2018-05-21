@@ -2,20 +2,12 @@ package cash_desk;
 
 import org.junit.Assert;
 import org.junit.Test;
-import supermarket.backet_calculator.BacketCalculator;
-import supermarket.backet_calculator.BacketCalculatorImpl;
-import supermarket.cash_desk.CashDesk;
 import supermarket.cash_desk.CashDeskImpl;
 import supermarket.customer.Customer;
 import supermarket.product_stock.ProductStock;
-import supermarket.product_stock.ProductStockImpl;
 import supermarket.stat.StockStat;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 class MockCashDesk extends CashDeskImpl {

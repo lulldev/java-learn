@@ -13,16 +13,16 @@ public class SpreadsheetController extends ParserString {
         mSpreadsheet = spreadsheet;
         mCommands = new HashMap<>();
         mCommands.put("set", this::setValue);
-
         mCommands.put("setformula", this::setFormula);
-
         mCommands.put("display", token -> mSpreadsheet.display());
     }
 
     public void start() throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String line;
-        while ((line = reader.readLine()) != null) {
+        do {
+            System.out.printf("%3s", ">> ");
+            line = reader.readLine();
             try {
                 if (line.endsWith("stop")) {
                     break;
@@ -37,10 +37,11 @@ public class SpreadsheetController extends ParserString {
                 } else {
                     throw new Exception("Unknown command!");
                 }
+
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
-        }
+        } while (line != null);
     }
 
     private void setValue(String[] token) throws Exception {

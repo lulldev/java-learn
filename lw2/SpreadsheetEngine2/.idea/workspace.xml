@@ -139,13 +139,7 @@
             <path>
               <item name="SpreadsheetEngine2" type="b2602c69:ProjectViewProjectNode" />
               <item name="SpreadsheetEngine2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpreadsheetEngine2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpreadsheetEngine2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="spreadsheet_engine" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />

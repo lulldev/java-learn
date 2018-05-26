@@ -5,42 +5,41 @@ import java.util.*;
 
 public class Spreadsheet {
     private static final Integer COUNT_SPACES = 15;
-    private static TreeMap<Character, TreeMap<Integer, String>> mTable = new TreeMap<>();
+    private static TreeMap<Character, TreeMap<Integer, String>> table = new TreeMap<>();
 
     public Spreadsheet() {
     }
 
     void setValue(Pair pair, String newValue) {
-        if (mTable.containsKey(pair.first)) {
-            TreeMap<Integer, String> row = mTable.get(pair.first);
+        if (table.containsKey(pair.first)) {
+            TreeMap<Integer, String> row = table.get(pair.first);
             row.put(pair.second, newValue);
         } else {
             TreeMap<Integer, String> row = new TreeMap<Integer, String>();
             row.put(pair.second, newValue);
-            mTable.put(pair.first, row);
+            table.put(pair.first, row);
         }
     }
 
     void setFormula(Pair pair, String newValue) {
-        if (mTable.containsKey(pair.first)) {
-            TreeMap<Integer, String> row = mTable.get(pair.first);
+        if (table.containsKey(pair.first)) {
+            TreeMap<Integer, String> row = table.get(pair.first);
             row.put(pair.second, newValue);
         } else {
             TreeMap<Integer, String> row = new TreeMap<Integer, String>();
             row.put(pair.second, newValue);
-            mTable.put(pair.first, row);
+            table.put(pair.first, row);
         }
     }
 
     void display() {
-        //System.out.println(mTable);
         System.out.print("  ");
-        for (Map.Entry entry : mTable.entrySet()) {
+        for (Map.Entry entry : table.entrySet()) {
             System.out.printf("%15s", entry.getKey());
         }
         System.out.println("");
         Set<Integer> setIndexColumn = new HashSet<Integer>();
-        for (Map.Entry<Character, TreeMap<Integer, String>> entry : mTable.entrySet()) {
+        for (Map.Entry<Character, TreeMap<Integer, String>> entry : table.entrySet()) {
             TreeMap<Integer, String> row = entry.getValue();
             for (Map.Entry element : row.entrySet()) {
                 if (!setIndexColumn.contains(element.getKey())) {
@@ -48,7 +47,6 @@ public class Spreadsheet {
                     printValue( (Integer) element.getKey());
                     setIndexColumn.add((Integer) element.getKey());
                     System.out.println();
-
                 }
             }
         }
@@ -56,9 +54,9 @@ public class Spreadsheet {
 
     boolean isFormula(Pair cell) {
         boolean result = false;
-        if(mTable.containsKey(cell.first)) {
-            if(mTable.get(cell.first).containsKey(cell.second)) {
-                String[] token = mTable.get(cell.first).get(cell.second).split(" ");
+        if(table.containsKey(cell.first)) {
+            if(table.get(cell.first).containsKey(cell.second)) {
+                String[] token = table.get(cell.first).get(cell.second).split(" ");
                 result = token[0].equals("formula");
             }
         }
@@ -67,9 +65,9 @@ public class Spreadsheet {
 
     String getFormula(Pair cell) {
         String formula = "";
-        if(mTable.containsKey(cell.first)) {
-            if(mTable.get(cell.first).containsKey(cell.second)) {
-                String[] token = mTable.get(cell.first).get(cell.second).split(" ");
+        if(table.containsKey(cell.first)) {
+            if(table.get(cell.first).containsKey(cell.second)) {
+                String[] token = table.get(cell.first).get(cell.second).split(" ");
                 formula = token[1];
             }
         }
@@ -78,7 +76,7 @@ public class Spreadsheet {
 
     private void printValue(Integer rowInteger) {
         int counter = 1;
-        for (Map.Entry<Character, TreeMap<Integer, String>> entry : mTable.entrySet()) {
+        for (Map.Entry<Character, TreeMap<Integer, String>> entry : table.entrySet()) {
             TreeMap<Integer, String> row = entry.getValue();
             for (Map.Entry element : row.entrySet()) {
                 if (Objects.equals((Integer) element.getKey(), rowInteger)) {
@@ -101,8 +99,8 @@ public class Spreadsheet {
 
     private Double getValueVariable(String variable) {
         Double value;
-        if (mTable.containsKey(variable.charAt(0))) {
-            TreeMap<Integer, String> col = mTable.get(variable.charAt(0));
+        if (table.containsKey(variable.charAt(0))) {
+            TreeMap<Integer, String> col = table.get(variable.charAt(0));
             if (col.containsKey(Integer.parseInt("" + variable.charAt(1)))) {
                 String valueStr = col.get(Integer.parseInt("" + variable.charAt(1)));
                 if (valueStr.split(" ")[0].equals("formula")) {
@@ -119,7 +117,7 @@ public class Spreadsheet {
     }
 
     private double calculation(String formula) {
-        String[] prefixStrArray = formula.split(" "); //* + A1 5  A1
+        String[] prefixStrArray = formula.split(" ");
         Stack<Double> stack = new Stack<Double>();
 
         Map<String, Calculation> mapOperations = new HashMap<String, Calculation>();
@@ -139,7 +137,8 @@ public class Spreadsheet {
             if (mapOperations.containsKey(prefixStr)) {
                 Double operand1 = stack.pop();
                 Double operand2 = stack.pop();
-                stack.push((prefixStr.equals("/") && (operand2 == 0)) ? Double.NaN : mapOperations.get(prefixStr).getResult(operand1, operand2));
+                stack.push((prefixStr.equals("/") && (operand2 == 0)) ?
+                        Double.NaN : mapOperations.get(prefixStr).getResult(operand1, operand2));
             } else {
                 if (isDouble(prefixStr)) {
                     stack.push(Double.parseDouble(prefixStr));
@@ -153,7 +152,7 @@ public class Spreadsheet {
 
     private static boolean isDouble(String s) {
         try {
-            Double.parseDouble(s); //converts the string into an integer
+            Double.parseDouble(s);
             return true;
         } catch (NumberFormatException e) {
             return false;

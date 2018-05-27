@@ -14,7 +14,7 @@ public class Main {
             @Override
             public void run() {
                 supermarket.runMarketScenario();
-                if (++seconds == (supermarket.getWorkingTimeMinutes() * 120)) {
+                if (++seconds == (supermarket.getWorkingTimeMinutes() * 60)) {
                     supermarket.closeMarket();
                     supermarket.showReport();
                     timer.cancel();
